@@ -26,16 +26,16 @@ public class Main {
 
                 switch (operation) {
                     case "authenticate":
-                        result = bank.authenticate((long) input.get("acc_no"), (int) input.get("pin"));
+                        result = bank.authenticate((long)input.get("acc_no"), (int)input.get("pin"));
                         break;
 
                     case "getTransactions":
-                        result = bank.getTransactions((long) input.get("send_acc"), (long) input.get("recv_acc"));
+                        result = bank.getTransactions((long)input.get("send_acc"), (long)input.get("recv_acc"));
                         break;
 
                     case "makeTransaction":
-                        bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
-                                123, (double) input.get("amount"));
+                        bank.makeTransaction((long)input.get("send_acc"), (long)input.get("recv_acc"),
+                                123, (double)input.get("amount"));
                         result = "transaction successful";
                         break;
 
@@ -47,7 +47,7 @@ public class Main {
                 JSONObject toWrite = new JSONObject();
                 toWrite.put("result", result);
 
-                try (Client client = new Client("", 5000)) {
+                try (Client client = new Client("", 5000)){
                     client.out.writeBytes(toWrite.toJSONString());
                 }
 
