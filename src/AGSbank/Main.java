@@ -7,21 +7,21 @@ import org.json.simple.parser.JSONParser;
 
 public class Main {
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        try (Bank bank = new Bank()){
+        try (Bank bank = new Bank()) {
 
             String line;
             JSONObject input;
             Object result;
+            Server server = new Server(5000);
 
             do {
 
                 // get info sent to bank i.e. read from broker
-                try (Server server = new Server(5000)) {
-                    line = server.in.readUTF();
-                    input = (JSONObject) (new JSONParser()).parse(line);
-                }
+                server.accept();
+                line = server.in.readUTF();
+                input = (JSONObject) (new JSONParser()).parse(line);
 
                 // perform some action
 
@@ -31,16 +31,17 @@ public class Main {
                 // perform operation and get result
                 switch (operation) {
                     case "authenticate":
-                        result = bank.authenticate((long)input.get("acc_no"), (int)input.get("pin"));
+                        result = bank.authenticate((long) input.get("acc_no"),
+                                Integer.parseInt(input.get("pin").toString()));
                         break;
 
                     case "getTransactions":
-                        result = bank.getTransactions((long)input.get("send_acc"), (long)input.get("recv_acc"));
+                        result = bank.getTransactions((long) input.get("send_acc"), (long) input.get("recv_acc"));
                         break;
 
                     case "makeTransaction":
-                        bank.makeTransaction((long)input.get("send_acc"), (long)input.get("recv_acc"),
-                                123, (double)input.get("amount"));
+                        bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
+                                123, (double) input.get("amount"));
                         result = "transaction successful";
                         break;
 
@@ -54,17 +55,16 @@ public class Main {
                 toWrite.put("result", result);
 
                 // write to broker
+                System.out.println(toWrite.toJSONString());
+                server.out.writeUTF(toWrite.toJSONString());
 
-                // write the json object to broker
-                try (Client client = new Client("insert ip here", 5000)){
-                    client.out.writeBytes(toWrite.toJSONString());
-                }
+                // close socket
+                server.close();
 
             } while (true);
 
-        }
-        catch (Exception e){
-            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

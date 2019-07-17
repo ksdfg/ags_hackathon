@@ -167,7 +167,7 @@ class TestBank {
         System.out.println();
 
         try (Bank bank = new Bank()) {
-            System.out.println(bank.getName(123456789));
+            System.out.println(bank.authenticate(123456789, 1234));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

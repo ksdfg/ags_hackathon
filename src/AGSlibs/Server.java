@@ -3,32 +3,40 @@ package AGSlibs;
 import java.io.*;
 import java.net.*;
 
-public class Server implements AutoCloseable{
+public class Server implements AutoCloseable {
     //initialize socket and input stream
-    private Socket socket   = null;
-    private ServerSocket server   = null;
-    public DataInputStream in       =  null;
+    private Socket socket;
+    private ServerSocket server;
+    public DataInputStream in;
+    public DataOutputStream out;
 
     // constructor with port
-    public Server(int port) throws IOException{
+    public Server(int port) throws IOException {
         // starts server and waits for a connection
         server = new ServerSocket(port);
-            System.out.println("Server started");
+    }
 
-            System.out.println("Waiting for a client ...");
+    public void accept() throws IOException{
+        System.out.println("Server started");
 
-            socket = server.accept();
-            System.out.println("Client accepted");
+        System.out.println("Waiting for a client ...");
 
-            // takes input from the client socket
-            in = new DataInputStream(
-                    new BufferedInputStream(socket.getInputStream()));
+        socket = server.accept();
+        System.out.println("Client accepted");
+
+        // takes input from the client socket
+        in = new DataInputStream(socket.getInputStream());
+
+        // sends output to the socket
+        out = new DataOutputStream(socket.getOutputStream());
     }
 
     @Override
     public void close() throws Exception {
+        System.out.println("Closing Socket");
         // close connection
-        socket.close();
+        out.close();
         in.close();
+        socket.close();
     }
 }
