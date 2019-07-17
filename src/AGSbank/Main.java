@@ -25,7 +25,7 @@ public class Main {
 
                 // perform some action
 
-                // get wht operation to make
+                // get what operation to make
                 String operation = (String) input.getOrDefault("operation", "");
 
                 // perform operation and get result
@@ -47,7 +47,7 @@ public class Main {
 
                     default:
                         System.out.println("bad operation");
-                        result = "";
+                        result = null;
                 }
 
                 // create a json object with the result
@@ -55,11 +55,11 @@ public class Main {
                 toWrite.put("result", result);
 
                 // write to broker
-                System.out.println(toWrite.toJSONString());
                 server.out.writeUTF(toWrite.toJSONString());
 
                 // close socket
                 server.close();
+                System.out.println();
 
             } while (true);
 
