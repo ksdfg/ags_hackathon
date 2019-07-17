@@ -17,11 +17,13 @@ public class Main {
 
             do {
 
-                // get info sent to bank
+                // get info sent to bank i.e. read from broker
                 try (Server server = new Server(5000)) {
                     line = server.in.readUTF();
                     input = (JSONObject) (new JSONParser()).parse(line);
                 }
+
+                // perform some action
 
                 // get wht operation to make
                 String operation = (String) input.getOrDefault("operation", "");
@@ -50,6 +52,8 @@ public class Main {
                 // create a json object with the result
                 JSONObject toWrite = new JSONObject();
                 toWrite.put("result", result);
+
+                // write to broker
 
                 // write the json object to broker
                 try (Client client = new Client("insert ip here", 5000)){
