@@ -1,6 +1,7 @@
 package AGSbroker;
 
 import AGSlibs.DatabaseAccess;
+import org.json.simple.JSONArray;
 
 import java.sql.ResultSet;
 import java.lang.AutoCloseable;
@@ -13,6 +14,21 @@ public class Broker implements AutoCloseable {
     public Broker() throws SQLException {
         da = new DatabaseAccess();
         da.opendb("ags_broker", "broker", "megameow");  // open the database
+    }
+
+    public JSONArray getAccounts(String deviceID) throws SQLException {
+        JSONArray jsonArray = new JSONArray();  // basically where we add the result
+
+        // get all accounts connected to a device
+        ResultSet resultSet = da.getData("linked_device_list", "acc_no",
+                "device_id = '"+deviceID+"'");
+
+        // add them to json array
+        while (resultSet.next()){
+            jsonArray.add(resultSet.getLong("acc_no"));
+        }
+
+        return jsonArray;   // kaeritai
     }
 
     public boolean findDevice(long acc_no, String deviceID) throws SQLException {
@@ -51,7 +67,7 @@ class TestBroker {
         System.out.println();
 
         try (Broker broker = new Broker()) {
-            System.out.println(broker.findDevice(123456789, "vc:sd:qw:re:qw"));
+            System.out.println(broker.getAccounts("aa:bb:cc:dd:ee:ff"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

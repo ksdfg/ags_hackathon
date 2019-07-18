@@ -28,6 +28,10 @@ public class Main {
                 //  perform operation and get result
                 result = new JSONObject();
                 switch (operation) {
+                    case "getAccounts":
+                        result.put("result", broker.getAccounts(input.get("deviceID").toString()));
+                        break;
+
                     case "findDevice":
                         result.put("result", broker.findDevice((long) input.get("acc_no"),
                                 input.get("deviceID").toString()));
