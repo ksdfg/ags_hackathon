@@ -3,7 +3,7 @@ package AGSlibs;
 import java.io.*;
 import java.net.*;
 
-public class Server implements AutoCloseable {
+public class ServerTools {
     //initialize socket and input stream
     private Socket socket;
     private ServerSocket server;
@@ -11,14 +11,13 @@ public class Server implements AutoCloseable {
     public DataOutputStream out;
 
     // constructor with port
-    public Server(int port) throws IOException {
+    public ServerTools(int port) throws IOException {
         // starts server and waits for a connection
         server = new ServerSocket(port);
+        System.out.println("Server started");
     }
 
     public void accept() throws IOException{
-        System.out.println("Server started");
-
         System.out.println("Waiting for a client ...");
 
         socket = server.accept();
@@ -31,8 +30,7 @@ public class Server implements AutoCloseable {
         out = new DataOutputStream(socket.getOutputStream());
     }
 
-    @Override
-    public void close() throws Exception {
+    public void closeSocket() throws Exception {
         System.out.println("Closing Socket");
         // close connection
         out.close();

@@ -1,7 +1,6 @@
 package AGSbank;
 
-import AGSlibs.Client;
-import AGSlibs.Server;
+import AGSlibs.ServerTools;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -14,7 +13,7 @@ public class Main {
             String line;
             JSONObject input;
             Object result;
-            Server server = new Server(5000);
+            ServerTools server = new ServerTools(5000);
 
             do {
 
@@ -58,7 +57,7 @@ public class Main {
                 server.out.writeUTF(toWrite.toJSONString());
 
                 // close socket
-                server.close();
+                server.closeSocket();
                 System.out.println();
 
             } while (true);

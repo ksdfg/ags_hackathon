@@ -3,7 +3,7 @@ package AGSlibs;
 import java.io.*;
 import java.net.*;
 
-public class Client implements AutoCloseable{
+public class ClientTools implements AutoCloseable{
 
     // initialize socket and input output streams
     private Socket socket;
@@ -11,7 +11,7 @@ public class Client implements AutoCloseable{
     public DataInputStream in;
 
     // constructor to put ip address and port
-    public Client(String address, int port) throws IOException {
+    public ClientTools(String address, int port) throws IOException {
         // establish a connection
         socket = new Socket(address, port);
         System.out.println("Connected");

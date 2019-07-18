@@ -1,6 +1,6 @@
 package AGSbroker;
 
-import AGSlibs.Client;
+import AGSlibs.ClientTools;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -15,6 +15,7 @@ public class Main {
             do {
 
                 // first read from javascript
+
 
                 // read json object here, replace "{}" with json string you get from javascript
                 input = (JSONObject) (new JSONParser()).parse("{}");
@@ -45,7 +46,7 @@ public class Main {
                     case "getTransactions": // bank ka kaam
 
                     case "makeTransaction": // bank ka kaam
-                        try (Client client = new Client("localhost", 5000)) {   // change localhost to bank ip
+                        try (ClientTools client = new ClientTools("localhost", 5000)) {   // change localhost to bank ip
                             client.out.writeUTF(input.toJSONString());  // write to bank
                             result = (JSONObject) (new JSONParser()).parse(client.in.readUTF());   // read from bank
                         }
