@@ -10,7 +10,6 @@ public class Main {
 
         try (Bank bank = new Bank()) {
 
-            String line;
             JSONObject input;
             Object result;
             ServerTools server = new ServerTools(5000);
@@ -19,8 +18,7 @@ public class Main {
 
                 // get info sent to bank i.e. read from broker
                 server.accept();
-                line = server.in.readUTF();
-                input = (JSONObject) (new JSONParser()).parse(line);
+                input = (JSONObject) (new JSONParser()).parse(server.in.readUTF());
 
                 // perform some action
 

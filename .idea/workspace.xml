@@ -5,8 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AGSbank/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AGSbank/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AGSbroker/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AGSbroker/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AGSlibs/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AGSlibs/ClientTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/AGSlibs/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/AGSlibs/ServerTools.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +21,20 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AGSbroker/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="96">
+              <caret line="50" column="54" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/AGSlibs/meow.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="12" column="53" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -35,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/AGSbank/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="-468">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -47,8 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/AGSlibs/ServerTools.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+            <state relative-caret-position="255">
+              <caret line="15" column="33" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="33" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -80,9 +90,11 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>Client</find>
+      <find>java script</find>
     </findStrings>
     <replaceStrings>
       <replace>Server</replace>
+      <replace>javascript</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -98,12 +110,13 @@
         <option value="$PROJECT_DIR$/src/AGSbroker/Broker.java" />
         <option value="$PROJECT_DIR$/src/AGSbank/TestServerClient.java" />
         <option value="$PROJECT_DIR$/src/AGSbank/Bank.java" />
-        <option value="$PROJECT_DIR$/src/AGSbank/meow.java" />
         <option value="$PROJECT_DIR$/src/AGSlibs/Client.java" />
         <option value="$PROJECT_DIR$/src/AGSlibs/Server.java" />
-        <option value="$PROJECT_DIR$/src/AGSbank/Main.java" />
         <option value="$PROJECT_DIR$/src/AGSlibs/ClientTools.java" />
         <option value="$PROJECT_DIR$/src/AGSbroker/Main.java" />
+        <option value="$PROJECT_DIR$/src/AGSbank/Main.java" />
+        <option value="$PROJECT_DIR$/src/AGSbank/meow.java" />
+        <option value="$PROJECT_DIR$/src/AGSlibs/meow.java" />
       </list>
     </option>
   </component>
@@ -148,13 +161,6 @@
               <item name="ags" type="b2602c69:ProjectViewProjectNode" />
               <item name="ags" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="AGSbroker" type="462c0819:PsiDirectoryNode" />
-              <item name="Broker.java" type="529ef68f:ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </path>
-            <path>
-              <item name="ags" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ags" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="AGSlibs" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -190,7 +196,7 @@
       <module name="ags" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="AGSbank.*" />
+          <option name="PATTERN" value="AGSlibs.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -216,7 +222,7 @@
       <module name="ags" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="AGSbank.*" />
+          <option name="PATTERN" value="AGSlibs.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -238,11 +244,11 @@
       </method>
     </configuration>
     <configuration name="meow" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="AGSbank.meow" />
+      <option name="MAIN_CLASS_NAME" value="AGSlibs.meow" />
       <module name="ags" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="AGSbank.*" />
+          <option name="PATTERN" value="AGSlibs.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -260,8 +266,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.meow" />
-        <item itemvalue="Application.bankMain" />
         <item itemvalue="Application.brokerMain" />
+        <item itemvalue="Application.bankMain" />
         <item itemvalue="Application.TestBank" />
         <item itemvalue="Application.TestBroker" />
       </list>
@@ -334,7 +340,14 @@
       <option name="project" value="LOCAL" />
       <updated>1563396785268</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="wrote more broker main">
+      <created>1563445658729</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1563445658729</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TodoView">
@@ -348,6 +361,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27231467" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -476,22 +490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AGSbank/Bank.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="174" column="5" selection-start-line="174" selection-start-column="5" selection-end-line="174" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#authenticate#0;class#Bank#0" />
-            <element signature="method#getAccount#0;class#Bank#0" />
-            <element signature="method#getName#0;class#Bank#0" />
-            <element signature="method#getTransactions#0;class#Bank#0" />
-            <element signature="method#makeTransaction#0;class#Bank#0" />
-            <element signature="method#close#0;class#Bank#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AGSbroker/Broker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
@@ -506,16 +504,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AGSbank/meow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/AGSlibs/ClientTools.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -526,20 +514,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AGSbroker/Main.java">
+    <entry file="file://$PROJECT_DIR$/src/AGSbank/Bank.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="187">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#authenticate#0;class#Bank#0" />
+            <element signature="method#getAccount#0;class#Bank#0" />
+            <element signature="method#getName#0;class#Bank#0" />
+            <element signature="method#getTransactions#0;class#Bank#0" />
+            <element signature="method#makeTransaction#0;class#Bank#0" />
+            <element signature="method#close#0;class#Bank#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AGSlibs/ServerTools.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="13" column="22" selection-start-line="13" selection-start-column="22" selection-end-line="13" selection-end-column="22" />
+        <state relative-caret-position="255">
+          <caret line="15" column="33" selection-start-line="15" selection-start-column="21" selection-end-line="15" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AGSbroker/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="50" column="54" selection-start-line="50" selection-start-column="54" selection-end-line="50" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AGSlibs/meow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="53" selection-start-line="12" selection-start-column="53" selection-end-line="12" selection-end-column="53" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -548,8 +562,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AGSbank/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="-468">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -1,6 +1,7 @@
 package AGSbroker;
 
 import AGSlibs.ClientTools;
+import AGSlibs.ServerTools;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -11,14 +12,15 @@ public class Main {
         try (Broker broker = new Broker()) {
 
             JSONObject input, result;
+            ServerTools server = new ServerTools(8000);
 
             do {
 
-                // first read from javascript
+                // Connect to javascript
+                server.accept();
 
-
-                // read json object here, replace "{}" with json string you get from javascript
-                input = (JSONObject) (new JSONParser()).parse("{}");
+                // read json object sent by javascript
+                input = (JSONObject) (new JSONParser()).parse(server.in.readUTF());
 
                 // get what operation to make
                 String operation = input.getOrDefault("operation", "").toString();
@@ -57,7 +59,12 @@ public class Main {
                         result.put("result", null);
                 }
 
-                // write result to java script
+                // write result to javascript
+                server.out.writeUTF(result.toJSONString());
+
+                // close socket
+                server.closeSocket();
+                System.out.println();
 
             } while (true);
 
