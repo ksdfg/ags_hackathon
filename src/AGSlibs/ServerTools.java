@@ -3,7 +3,7 @@ package AGSlibs;
 import java.io.*;
 import java.net.*;
 
-public class ServerTools {
+public class ServerTools implements AutoCloseable{
     //initialize socket and input stream
     private Socket socket;
     private ServerSocket server;
@@ -36,5 +36,10 @@ public class ServerTools {
         out.close();
         in.close();
         socket.close();
+    }
+
+    @Override
+    public void close() throws Exception {
+        server.close();
     }
 }

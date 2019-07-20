@@ -12,58 +12,63 @@ public class Main {
 
             JSONObject input;
             Object result;
-            ServerTools server = new ServerTools(5000);
 
-            do {
+            try (ServerTools server = new ServerTools(5000)) {
 
-                // get info sent to bank i.e. read from broker
-                server.accept();
-                input = (JSONObject) (new JSONParser()).parse(server.in.readUTF());
+                do {
 
-                // perform some action
+                    // get info sent to bank i.e. read from broker
+                    server.accept();
+                    input = (JSONObject) (new JSONParser()).parse(server.in.readUTF());
 
-                // get what operation to make
-                String operation = (String) input.getOrDefault("operation", "");
+                    // perform some action
 
-                // perform operation and get result
-                try {
-                    switch (operation) {
-                        case "authenticate":
-                            result = bank.authenticate((long) input.get("acc_no"),
-                                    Integer.parseInt(input.get("pin").toString()));
-                            break;
+                    // get what operation to make
+                    String operation = (String) input.getOrDefault("operation", "");
 
-                        case "getTransactions":
-                            result = bank.getTransactions((long) input.get("send_acc"), (long) input.get("recv_acc"));
-                            break;
+                    // perform operation and get result
+                    try {
+                        switch (operation) {
+                            case "authenticate":
+                                result = bank.authenticate((long) input.get("acc_no"),
+                                        Integer.parseInt(input.get("pin").toString()));
+                                break;
 
-                        case "makeTransaction":
-                            bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
-                                    123, (double) input.get("amount"));
-                            result = true;
-                            break;
+                            case "getTransactions":
+                                result = bank.getTransactions((long) input.get("send_acc"), (long) input.get("recv_acc"));
+                                break;
 
-                        default:
-                            System.out.println("bad operation");
-                            result = "unsuccessful";
+                            case "makeTransaction":
+                                bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
+                                        123, (double) input.get("amount"));
+                                result = true;
+                                break;
+
+                            default:
+                                System.out.println("bad operation");
+                                result = "unsuccessful";
+                        }
+                    } catch (Exception e) {
+                        result = "unsuccessful";
                     }
-                }
-                catch (Exception e){
-                    result = "unsuccessful";
-                }
 
-                // create a json object with the result
-                JSONObject toWrite = new JSONObject();
-                toWrite.put("result", result);
+                    // create a json object with the result
+                    JSONObject toWrite = new JSONObject();
+                    toWrite.put("result", result);
 
-                // write to broker
-                server.out.writeUTF(toWrite.toJSONString());
+                    // write to broker
+                    server.out.writeUTF(toWrite.toJSONString());
 
-                // close socket
-                server.closeSocket();
-                System.out.println();
+                    // close socket
+                    server.closeSocket();
+                    System.out.println();
 
-            } while (true);
+                } while (true);
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
