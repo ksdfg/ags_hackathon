@@ -15,7 +15,7 @@ public class Bank implements AutoCloseable {
 
     public Bank() throws SQLException {
         da = new DatabaseAccess();
-        da.opendb("ags_bank", "bank", "TestAGS");  // open the database
+        da.opendb("ags_bank", "bank", "meow");  // open the database
     }
 
     // authenticate if credentials of user are correct
