@@ -22,6 +22,9 @@ public class Main {
                     // read json object sent by javascript
                     input = (JSONObject) (new JSONParser()).parse(server.in.readUTF());
 
+                    // display received json object
+                    System.out.println((input.toJSONString()));
+
                     // get what operation to make
                     String operation = input.getOrDefault("operation", "").toString();
 
@@ -64,7 +67,8 @@ public class Main {
                                 result.put("result", "unsuccessful");
                         }
                     } catch (Exception e) {
-                        result.put("result", "unsuccessful");
+                        e.printStackTrace();
+                        result.put("result", "error");
                     }
 
                     // write result to javascript

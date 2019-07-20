@@ -4,6 +4,11 @@ import AGSlibs.ServerTools;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Random;
+
+import static java.lang.Math.abs;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -12,6 +17,7 @@ public class Main {
 
             JSONObject input;
             Object result;
+            Random r = new Random();
 
             try (ServerTools server = new ServerTools(5000)) {
 
@@ -21,7 +27,8 @@ public class Main {
                     server.accept();
                     input = (JSONObject) (new JSONParser()).parse(server.in.readUTF());
 
-                    // perform some action
+                    // display received json object
+                    System.out.println((input.toJSONString()));
 
                     // get what operation to make
                     String operation = (String) input.getOrDefault("operation", "");
@@ -39,8 +46,17 @@ public class Main {
                                 break;
 
                             case "makeTransaction":
-                                bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
-                                        123, (double) input.get("amount"));
+                                while (true) {
+                                    try {
+                                        Long transID = abs(r.nextLong());
+                                        bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
+                                                transID, (double) input.get("amount"));
+                                        break;
+                                    }
+                                    catch (SQLIntegrityConstraintViolationException se){
+                                        System.out.println("duplicate key");
+                                    }
+                                }
                                 result = true;
                                 break;
 
@@ -49,7 +65,8 @@ public class Main {
                                 result = "unsuccessful";
                         }
                     } catch (Exception e) {
-                        result = "unsuccessful";
+                        e.printStackTrace();
+                        result = "error";
                     }
 
                     // create a json object with the result
