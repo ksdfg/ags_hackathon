@@ -40,12 +40,12 @@ public class Main {
 
                         case "addDevice":
                             broker.addDevice((long) input.get("acc_no"), input.get("deviceID").toString());
-                            result.put("result", "device added");
+                            result.put("result", true);
                             break;
 
                         case "removeDevice":
                             broker.removeDevice((long) input.get("acc_no"), input.get("deviceID").toString());
-                            result.put("result", "device added");
+                            result.put("result", true);
                             break;
 
                         case "authenticate":    // bank ka kaam
@@ -61,7 +61,7 @@ public class Main {
 
                         default:
                             System.out.println("bad operation");
-                            result.put("result", null);
+                            result.put("result", "unsuccessful");
                     }
                 }
                 catch (Exception e){

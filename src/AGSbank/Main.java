@@ -40,12 +40,12 @@ public class Main {
                         case "makeTransaction":
                             bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
                                     123, (double) input.get("amount"));
-                            result = "transaction successful";
+                            result = true;
                             break;
 
                         default:
                             System.out.println("bad operation");
-                            result = null;
+                            result = "unsuccessful";
                     }
                 }
                 catch (Exception e){
