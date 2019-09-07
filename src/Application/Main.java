@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        try (Broker broker = new Broker()) {
+        try (App app = new App()) {
 
             JSONObject input, result;
             try (ServerTools server = new ServerTools(8000)) {
@@ -33,21 +33,21 @@ public class Main {
                     try {
                         switch (operation) {
                             case "getAccounts":
-                                result.put("result", broker.getAccounts(input.get("deviceID").toString()));
+                                result.put("result", app.getAccounts(input.get("deviceID").toString()));
                                 break;
 
                             case "findDevice":
-                                result.put("result", broker.findDevice((long) input.get("acc_no"),
+                                result.put("result", app.findDevice((long) input.get("acc_no"),
                                         input.get("deviceID").toString()));
                                 break;
 
                             case "addDevice":
-                                broker.addDevice((long) input.get("acc_no"), input.get("deviceID").toString());
+                                app.addDevice((long) input.get("acc_no"), input.get("deviceID").toString());
                                 result.put("result", true);
                                 break;
 
                             case "removeDevice":
-                                broker.removeDevice((long) input.get("acc_no"), input.get("deviceID").toString());
+                                app.removeDevice((long) input.get("acc_no"), input.get("deviceID").toString());
                                 result.put("result", true);
                                 break;
 

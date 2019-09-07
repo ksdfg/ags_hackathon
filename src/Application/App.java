@@ -6,11 +6,11 @@ import org.json.simple.JSONArray;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Broker implements AutoCloseable {
+public class App implements AutoCloseable {
 
     private DatabaseAccess da;
 
-    public Broker() throws SQLException {
+    public App() throws SQLException {
         da = new DatabaseAccess();
         da.opendb("ags_broker", "broker", "megameow");  // open the database
     }
@@ -60,13 +60,13 @@ public class Broker implements AutoCloseable {
     }
 }
 
-class TestBroker {
+class TestApp {
     public static void main(String[] args) {
 
         System.out.println();
 
-        try (Broker broker = new Broker()) {
-            System.out.println(broker.getAccounts("aa:bb:cc:dd:ee:ff"));
+        try (App app = new App()) {
+            System.out.println(app.getAccounts("aa:bb:cc:dd:ee:ff"));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
