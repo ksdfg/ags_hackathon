@@ -4,7 +4,6 @@ import AGSlibs.DatabaseAccess;
 import org.json.simple.JSONArray;
 
 import java.sql.ResultSet;
-import java.lang.AutoCloseable;
 import java.sql.SQLException;
 
 public class Broker implements AutoCloseable {

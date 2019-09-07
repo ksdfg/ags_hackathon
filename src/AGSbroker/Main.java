@@ -80,8 +80,7 @@ public class Main {
 
                 } while (true);
 
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

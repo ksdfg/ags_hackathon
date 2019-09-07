@@ -1,13 +1,11 @@
 package AGSbank;
 
 import AGSlibs.DatabaseAccess;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.sql.ResultSet;
-import java.lang.AutoCloseable;
 import java.sql.SQLException;
-
-import org.json.simple.JSONObject;
-import org.json.simple.JSONArray;
 
 public class Bank implements AutoCloseable {
 
@@ -26,13 +24,12 @@ public class Bank implements AutoCloseable {
                 "pin",
                 "acc_no = " + acc_no
         );
-        int acc_pin = -1;
 
         if (!resultSet.next()) {   // if no account
             throw new Exception("Account number " + acc_no + " not in bank");
         }
 
-        acc_pin = resultSet.getInt("pin");  // retrieve the pin
+        int acc_pin = resultSet.getInt("pin");  // retrieve the pin
         return acc_pin == pin;  // check if pin is correct
     }
 
