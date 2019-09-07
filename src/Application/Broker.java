@@ -1,6 +1,6 @@
-package AGSbroker;
+package Application;
 
-import AGSlibs.DatabaseAccess;
+import ProjectLibs.DatabaseAccess;
 import org.json.simple.JSONArray;
 
 import java.sql.ResultSet;

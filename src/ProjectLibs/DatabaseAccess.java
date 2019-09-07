@@ -1,4 +1,4 @@
-package AGSlibs;
+package ProjectLibs;
 
 import java.sql.*;
 

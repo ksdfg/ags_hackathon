@@ -1,6 +1,6 @@
-package AGSbank;
+package Bank;
 
-import AGSlibs.ServerTools;
+import ProjectLibs.ServerTools;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 

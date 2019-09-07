@@ -1,7 +1,7 @@
-package AGSbroker;
+package Application;
 
-import AGSlibs.ClientTools;
-import AGSlibs.ServerTools;
+import ProjectLibs.ClientTools;
+import ProjectLibs.ServerTools;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 

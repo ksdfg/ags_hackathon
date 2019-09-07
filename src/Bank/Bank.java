@@ -1,6 +1,6 @@
-package AGSbank;
+package Bank;
 
-import AGSlibs.DatabaseAccess;
+import ProjectLibs.DatabaseAccess;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
