@@ -64,6 +64,24 @@ public class DatabaseAccess {
         return resultSet;   //returning the result of query
     }
 
+    // same as above, but with join - overloaded
+    public ResultSet getData(String tables, String joinOn, String columns, String conditions) throws SQLException {
+        ResultSet resultSet = null;     //will return null in case of error
+        try {
+            //fire query
+            resultSet = statement.executeQuery(
+                    "Select "+columns
+                            +" from "+tables.replace(", ", " join ")
+                            +" on "+joinOn
+                            +" where "+conditions
+            );
+        }
+        catch (Exception e){
+            throw e;
+        }
+        return resultSet;   //returning the result of query
+    }
+
     // insert a row into a table
     public void addRow(String tablename, String values) throws SQLException {
         try {
