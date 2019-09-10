@@ -38,6 +38,12 @@ public class Main {
                                 );
                                 break;
 
+                            case "getAccounts":
+                                result.put(
+                                        "result", app.getAccounts(input.get("userid").toString())
+                                );
+                                break;
+
                             case "getTransactions": // bank ka kaam
 
                             case "makeTransaction": // bank ka kaam

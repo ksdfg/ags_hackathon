@@ -54,6 +54,7 @@ CREATE TABLE `auth_keys` (
   `USER_ID` varchar(25) NOT NULL,
   `TYPE` varchar(15) NOT NULL,
   `VALUE` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`USER_ID`,`TYPE`),
   KEY `USER_ID` (`USER_ID`),
   CONSTRAINT `auth_keys_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -181,6 +182,7 @@ CREATE TABLE `transactions` (
   `Sender` int(11) DEFAULT NULL,
   `Receiver` int(11) DEFAULT NULL,
   `Amount` float(10,2) DEFAULT NULL,
+  `Timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`Trans_ID`),
   KEY `fk_sender` (`Sender`),
   KEY `fk_recceiver` (`Receiver`),
@@ -231,4 +233,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-10 11:10:37
+-- Dump completed on 2019-09-10 20:37:56

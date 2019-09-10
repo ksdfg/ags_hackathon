@@ -5,6 +5,7 @@ import org.json.simple.JSONArray;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class App implements AutoCloseable {
 
@@ -29,7 +30,18 @@ public class App implements AutoCloseable {
         return pwd.equals(rs.getString("password"));
     }
 
-    //
+    // get all accounts a user can authorize
+    public ArrayList getAccounts(String userid) throws SQLException {
+        // retrieve account numbers from db
+        ResultSet rs = da.getData("authorizes", "acc_no", "user_id = " + userid);
+
+        ArrayList<Integer> a = new ArrayList<>();   // arraylist to store acc_numbers
+        while(rs.next()){
+            a.add(rs.getInt("acc_no")); // add acc_no to the arraylist
+        }
+
+        return a;   // kaeritai
+    }
 
     @Override
     public void close() throws SQLException {
