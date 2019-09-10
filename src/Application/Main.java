@@ -32,23 +32,10 @@ public class Main {
                     result = new JSONObject();
                     try {
                         switch (operation) {
-                            case "getAccounts":
-                                result.put("result", app.getAccounts(input.get("deviceID").toString()));
-                                break;
-
-                            case "findDevice":
-                                result.put("result", app.findDevice((long) input.get("acc_no"),
-                                        input.get("deviceID").toString()));
-                                break;
-
-                            case "addDevice":
-                                app.addDevice((long) input.get("acc_no"), input.get("deviceID").toString());
-                                result.put("result", true);
-                                break;
-
-                            case "removeDevice":
-                                app.removeDevice((long) input.get("acc_no"), input.get("deviceID").toString());
-                                result.put("result", true);
+                            case "login":
+                                result.put("result",
+                                        app.login(input.get("userid").toString(), input.get("password").toString())
+                                );
                                 break;
 
                             case "authenticate":    // bank ka kaam

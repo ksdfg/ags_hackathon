@@ -36,28 +36,20 @@ public class Main {
                     // perform operation and get result
                     try {
                         switch (operation) {
-                            case "authenticate":
-                                result = bank.authenticate((long) input.get("acc_no"),
-                                        Integer.parseInt(input.get("pin").toString()));
-                                break;
 
                             case "getTransactions":
-                                result = bank.getTransactions((long) input.get("send_acc"), (long) input.get("recv_acc"));
+                                result = bank.getTransactions((int) input.get("acc"));
                                 break;
 
                             case "makeTransaction":
-                                while (true) {
-                                    try {
-                                        Long transID = abs(r.nextLong());
-                                        bank.makeTransaction((long) input.get("send_acc"), (long) input.get("recv_acc"),
-                                                transID, (double) input.get("amount"));
-                                        break;
-                                    }
-                                    catch (SQLIntegrityConstraintViolationException se){
-                                        System.out.println("duplicate key");
-                                    }
+                                if(bank.authenticate((int) input.get("send_acc"), (int) input.get("pin"))) {
+                                    bank.makeTransaction((int) input.get("send_acc"), (int) input.get("recv_acc"),
+                                            (double) input.get("amount"));
+                                    result = true;
                                 }
-                                result = true;
+                                else {
+                                    result = false;
+                                }
                                 break;
 
                             default:

@@ -54,7 +54,6 @@ CREATE TABLE `auth_keys` (
   `USER_ID` varchar(25) NOT NULL,
   `TYPE` varchar(15) NOT NULL,
   `VALUE` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`USER_ID`,`TYPE`),
   KEY `USER_ID` (`USER_ID`),
   CONSTRAINT `auth_keys_ibfk_1` FOREIGN KEY (`USER_ID`) REFERENCES `user` (`USER_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -178,11 +177,15 @@ DROP TABLE IF EXISTS `transactions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `transactions` (
-  `TRANS_ID` varchar(15) NOT NULL,
-  `TO_RECEIVER` varchar(20) DEFAULT NULL,
-  `FROM_SENDER` varchar(20) DEFAULT NULL,
-  `AMOUNT` float(10,2) DEFAULT NULL,
-  PRIMARY KEY (`TRANS_ID`)
+  `Trans_ID` bigint(20) NOT NULL,
+  `Sender` int(11) DEFAULT NULL,
+  `Receiver` int(11) DEFAULT NULL,
+  `Amount` float(10,2) DEFAULT NULL,
+  PRIMARY KEY (`Trans_ID`),
+  KEY `fk_sender` (`Sender`),
+  KEY `fk_recceiver` (`Receiver`),
+  CONSTRAINT `fk_recceiver` FOREIGN KEY (`Receiver`) REFERENCES `account` (`ACC_NO`),
+  CONSTRAINT `fk_sender` FOREIGN KEY (`Sender`) REFERENCES `account` (`ACC_NO`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -228,4 +231,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-09-07 20:08:59
+-- Dump completed on 2019-09-10 11:10:37
