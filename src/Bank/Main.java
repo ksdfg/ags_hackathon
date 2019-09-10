@@ -4,11 +4,6 @@ import ProjectLibs.ServerTools;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.Random;
-
-import static java.lang.Math.abs;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -17,7 +12,6 @@ public class Main {
 
             JSONObject input;
             Object result;
-            Random r = new Random();
 
             try (ServerTools server = new ServerTools(5000)) {
 
@@ -42,12 +36,14 @@ public class Main {
                                 break;
 
                             case "makeTransaction":
+                                // if the pin is right
                                 if(bank.authenticate((int) input.get("send_acc"), (int) input.get("pin"))) {
+                                    // make the transaction
                                     bank.makeTransaction((int) input.get("send_acc"), (int) input.get("recv_acc"),
                                             (double) input.get("amount"));
                                     result = true;
                                 }
-                                else {
+                                else {  //wrong pin, fuck off
                                     result = false;
                                 }
                                 break;

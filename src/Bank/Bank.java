@@ -7,6 +7,9 @@ import org.json.simple.JSONObject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -37,10 +40,26 @@ public class Bank implements AutoCloseable {
         return acc_pin == pin;  // check if pin is correct
     }
 
-    public String getTransactions(long acc) throws Exception {
+    public Map getTransactions(long acc) throws Exception {
         // get trans_table
+        ResultSet resultSet = da.getData(
+                "transactions t, account s, account r",
+                "t.sender = s.acc_no and t.receiver = r.acc_no",
+                "t.sender as sno, s.name as sname, t.receiver as rno, r.name as rname, t.amount as amount",
+                "t.sender = " + acc + "or t.receiver = " + acc
+        );
 
-        return "";
+        Map<String, Double> m = new HashMap<>();    // map to store all transactions
+        while(resultSet.next()){
+            // if acc is sender, then he's lost money
+            if (resultSet.getInt("sno") == acc)
+                m.put(resultSet.getString("rname"), resultSet.getDouble("amount") * -1);
+            // if acc isn't sender, he's gained money
+            else
+                m.put(resultSet.getString("sname"), resultSet.getDouble("amount"));
+        }
+
+        return m;   // kaeritai
     }
 
     // add a transaction to the user
@@ -58,7 +77,6 @@ public class Bank implements AutoCloseable {
         }
 
         double send_balance = sender.getDouble("balance");
-        String send_name = sender.getString("name");
 
         // get current balance and trans_table of acc_no - recv
         ResultSet recipient = da.getData(

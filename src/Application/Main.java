@@ -38,8 +38,6 @@ public class Main {
                                 );
                                 break;
 
-                            case "authenticate":    // bank ka kaam
-
                             case "getTransactions": // bank ka kaam
 
                             case "makeTransaction": // bank ka kaam

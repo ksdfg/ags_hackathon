@@ -23,11 +23,13 @@ public class App implements AutoCloseable {
                 "user_id = "+userid
         );
 
-        if(!rs.next())
+        if(!rs.next())  // if result set has 0 rows
             throw new Exception("no such user");
 
         return pwd.equals(rs.getString("password"));
     }
+
+    //
 
     @Override
     public void close() throws SQLException {
