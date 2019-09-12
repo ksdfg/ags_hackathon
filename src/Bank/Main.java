@@ -37,13 +37,12 @@ public class Main {
 
                             case "makeTransaction":
                                 // if the pin is right
-                                if(bank.authenticate((int) input.get("send_acc"), (int) input.get("pin"))) {
+                                if (bank.authenticate((int) input.get("send_acc"), (int) input.get("pin"))) {
                                     // make the transaction
                                     bank.makeTransaction((int) input.get("send_acc"), (int) input.get("recv_acc"),
                                             (double) input.get("amount"));
                                     result = true;
-                                }
-                                else {  //wrong pin, fuck off
+                                } else {  //wrong pin, fuck off
                                     result = false;
                                 }
                                 break;
@@ -70,8 +69,7 @@ public class Main {
 
                 } while (true);
 
-            }
-            catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
