@@ -1,15 +1,14 @@
 package Bank;
 
 import ProjectLibs.DatabaseAccess;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
 
 import static java.lang.Math.abs;
 
@@ -49,10 +48,10 @@ public class Bank implements AutoCloseable {
                 "t.sender = " + acc + " or t.receiver = " + acc + " order by t.timestamp"
         );
 
-        ArrayList<Vector> a = new ArrayList<>();    // map to store all transactions
-        Vector v;   // temp to add a transaction (other_party, amount) to arraylist
+        ArrayList<ArrayList<Object>> a = new ArrayList<>();    // map to store all transactions
+        ArrayList<Object> v;   // temp to add a transaction (other_party, amount) to arraylist
         while (resultSet.next()) {
-            v = new Vector();
+            v = new ArrayList<>();
 
             // if acc is sender, then he's lost money
             if (resultSet.getInt("sno") == acc) {
@@ -142,9 +141,7 @@ class TestBank {
 
         try (Bank bank = new Bank()) {
             System.out.println("it works...");
-            bank.makeTransaction(1, 2, 0.5);
             System.out.println(bank.getTransactions(1));
-            ;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
