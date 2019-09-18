@@ -16,10 +16,10 @@ public class Main {
 
                 do {
 
-                    // Connect to javascript
+                    // Connect to app gui
                     server.accept();
 
-                    // read json object sent by javascript
+                    // read json object sent by app gui
                     input = (JSONObject) (new JSONParser()).parse(server.in.readUTF());
 
                     // display received json object
@@ -44,6 +44,12 @@ public class Main {
                                 );
                                 break;
 
+                            case "authorize":
+                                result.put("result",
+                                        app.authorize(input.get("userid").toString(), input.get("type").toString(),
+                                        input.get("value").toString())
+                                );
+
                             case "getTransactions": // bank ka kaam
 
                             case "makeTransaction": // bank ka kaam
@@ -62,7 +68,7 @@ public class Main {
                         result.put("result", "error");
                     }
 
-                    // write result to javascript
+                    // write result to app gui
                     server.out.writeUTF(result.toJSONString());
 
                     // close socket
@@ -76,7 +82,6 @@ public class Main {
             }
 
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
             e.printStackTrace();
         }
 
