@@ -8,7 +8,7 @@ package GUI;
 /**
  * @author kashyap
  */
-public class NewJFrame1 extends javax.swing.JFrame {
+public class BankSelection extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -23,7 +23,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame1
      */
-    public NewJFrame1() {
+    public BankSelection() {
         initComponents();
     }
 
@@ -44,20 +44,20 @@ public class NewJFrame1 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BankSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BankSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BankSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BankSelection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame1().setVisible(true);
+                new BankSelection().setVisible(true);
             }
         });
     }
@@ -154,7 +154,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        new NewJFrame2().setVisible(true);
+        new Homepage().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
     // End of variables declaration//GEN-END:variables
