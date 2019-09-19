@@ -56,11 +56,7 @@ public class Login extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Login().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new Login().setVisible(true));
     }
 
     /**
@@ -158,7 +154,7 @@ public class Login extends javax.swing.JFrame {
                 JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
 
                 if ((Boolean) response.get("result")) {   // if request was successful
-                    new AccSelect(id.getText()).setVisible(true);
+                    new AccSelect(id.getText()).setVisible(true);   // pass user id to next frame
                     this.dispose();
                 } else {    // in case of error
                     JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());

@@ -66,6 +66,8 @@ public class Bank implements AutoCloseable {
                 v.add(resultSet.getDouble("amount"));
             }
 
+            v.add(resultSet.getTimestamp("timestamp").toString());
+
             a.add(v);   // add transaction to arraylist
         }
 

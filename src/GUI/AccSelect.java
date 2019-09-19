@@ -6,8 +6,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -15,6 +13,8 @@ import java.util.Vector;
  */
 public class AccSelect extends javax.swing.JFrame {
 
+    // the account in question - the one that logged in
+    public String userid;
     //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
     private javax.swing.JList accs;
     private javax.swing.JButton goHome;
@@ -24,11 +24,8 @@ public class AccSelect extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JScrollPane jScrollPane1;
     //</editor-fold>
-
-    // the account in question - the one that logged in
-    public String userid;
+    private javax.swing.JScrollPane jScrollPane1;
 
     /**
      * Creates new form AccSelect
@@ -37,7 +34,10 @@ public class AccSelect extends javax.swing.JFrame {
         this.userid = userid;
         initComponents();
     }
-    public AccSelect() {initComponents();}
+
+    public AccSelect() {
+        initComponents();
+    }
 
     /**
      * @param args the command line arguments
@@ -61,11 +61,7 @@ public class AccSelect extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AccSelect().setVisible(true);
-            }
-        });
+        java.awt.EventQueue.invokeLater(() -> new AccSelect().setVisible(true));
     }
 
     /**
@@ -111,9 +107,15 @@ public class AccSelect extends javax.swing.JFrame {
 
         accs.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         accs.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
+            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+
+            public int getSize() {
+                return strings.length;
+            }
+
+            public Object getElementAt(int i) {
+                return strings[i];
+            }
         });
         jScrollPane1.setViewportView(accs);
 
@@ -168,12 +170,13 @@ public class AccSelect extends javax.swing.JFrame {
             JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
 
             if ((Boolean) response.get("result")) {   // if request was successful
-                System.out.println(response.get("accounts"));
-                Vector<Long> v = new Vector<>();
-                JSONArray jsonArray = (JSONArray) response.get("accounts");
-                for(Object i : jsonArray){
-                    v.add((long) i);
-                }
+
+                Vector<Integer> v = new Vector<>(); // vector to store all accounts
+                JSONArray jsonArray = (JSONArray) response.get("accounts"); // json array we got in response
+                // transfer stuff from json array to vector
+                for (Object i : jsonArray)
+                    v.add(Integer.parseInt(i.toString()));
+
                 accs.setListData(v);
             } else {    // in case of error
                 JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
@@ -184,7 +187,11 @@ public class AccSelect extends javax.swing.JFrame {
     }
 
     private void goHomeActionPerformed(java.awt.event.ActionEvent evt) {
-        new Homepage().setVisible(true);
-        this.dispose();
+        try {
+            new Homepage((int) accs.getSelectedValue()).setVisible(true);   // pass acc no. to next form
+            this.dispose();
+        } catch (NullPointerException e) { // if no account is selected
+            JOptionPane.showMessageDialog(rootPane, "Please select an account");
+        }
     }
 }

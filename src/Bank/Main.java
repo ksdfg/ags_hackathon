@@ -33,7 +33,8 @@ public class Main {
                         switch (operation) {
 
                             case "get transactions":
-                                result.put("result", bank.getTransactions((int) input.get("acc")));
+                                result.put("transactions", bank.getTransactions(Integer.parseInt(input.get("acc").toString())));
+                                result.put("result", true);
                                 break;
 
                             case "make transaction":
