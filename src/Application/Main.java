@@ -51,6 +51,13 @@ public class Main {
                                         input.get("value").toString())
                                 );
 
+                            case "create user":
+                                result.put(
+                                        "result",
+                                        app.createUser(input.get("userid").toString(), input.get("pwd").toString())
+                                );
+                                break;
+
                             case "getTransactions": // bank ka kaam
 
                             case "makeTransaction": // bank ka kaam
