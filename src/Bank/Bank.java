@@ -8,6 +8,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import static java.lang.Math.abs;
@@ -19,6 +21,27 @@ public class Bank implements AutoCloseable {
     public Bank() throws SQLException {
         da = new DatabaseAccess();
         da.opendb("ocps", "bank", "meow");  // open the database
+    }
+
+    // return details of an account
+    public Map getDetails(int acc) throws Exception {
+        Map<String, String> map = new HashMap<>();  // map to store details
+        ResultSet resultSet = da.getData(
+                "account a, bank b",
+                "a.bank_id = b.bank_id",
+                "a.name as name, a.balance as balance, b.name as bank",
+                "acc_no = " + acc
+        );
+
+        if (!resultSet.next())  // if no results
+            throw new Exception("No such account");
+
+        // add details to map
+        map.put("name", resultSet.getString("name"));
+        map.put("balance", resultSet.getString("balance"));
+        map.put("bank", resultSet.getString("bank"));
+
+        return map;   // 帰りたい
     }
 
     // authenticate if credentials of user are correct

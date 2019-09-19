@@ -232,13 +232,13 @@ public class Homepage extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void formWindowOpened(WindowEvent evt) {
-        JSONObject request = new JSONObject();
-        request.put("operation", "get transactions");
+        JSONObject request = new JSONObject(), response;
         request.put("acc", acc);
-
+        //<editor-fold defaultstate="collapsed" desc=" get and display transactions ">
         try (ClientTools client = new ClientTools("localhost", 8000)) {
+            request.put("operation", "get transactions");
             client.out.writeUTF(request.toJSONString());
-            JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
 
             if ((Boolean) response.get("result")) {   // if request was successful
 
@@ -261,6 +261,25 @@ public class Homepage extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //</editor-fold>
+        //<editor-fold defaultstate="collapsed" desc=" get and display details ">
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            request.put("operation", "get details");
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
+
+            if ((Boolean) response.get("result")) {   // if request was successful
+                JSONObject details = (JSONObject) response.get("details");
+                name.setText(details.get("name").toString());
+                balance.setText(details.get("balance").toString());
+                bank.setText(details.get("bank").toString());
+            } else {    // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //</editor-fold>
     }
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {

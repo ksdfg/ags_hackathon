@@ -58,14 +58,15 @@ public class Main {
                                 );
                                 break;
 
+                            case "get details":      // bank ka kaam
+
                             case "get transactions": // bank ka kaam
 
                             case "make transaction": // bank ka kaam
+
                                 try (ClientTools client = new ClientTools("localhost", 5000)) {   // change localhost to bank ip
                                     client.out.writeUTF(input.toJSONString());  // write to bank
-                                    String s = client.in.readUTF();
-                                    System.out.println(s);
-                                    result = (JSONObject) (new JSONParser()).parse(s);   // read from bank
+                                    result = (JSONObject) (new JSONParser()).parse(client.in.readUTF());   // read from bank
                                 }
                                 break;
 

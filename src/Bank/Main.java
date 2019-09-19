@@ -32,6 +32,11 @@ public class Main {
                     try {
                         switch (operation) {
 
+                            case "get details":
+                                result.put("details", bank.getDetails(Integer.parseInt(input.get("acc").toString())));
+                                result.put("result", true);
+                                break;
+
                             case "get transactions":
                                 result.put("transactions", bank.getTransactions(Integer.parseInt(input.get("acc").toString())));
                                 result.put("result", true);
