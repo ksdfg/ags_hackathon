@@ -114,6 +114,7 @@ public class Homepage extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        setTitle("Homepage");
 
         transactions.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{},

@@ -1,11 +1,16 @@
 package GUI;
 
 import ProjectLibs.ClientTools;
+import com.bulenkov.darcula.DarculaLaf;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.awt.event.ActionEvent;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 
 /**
  * @author kashyap
@@ -33,21 +38,23 @@ public class Login extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+
     public static void main(String[] args) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+        //<editor-fold defaultstate="collapsed" desc=" Set the Darcula look and feel ">
+        // darcula throws hella warnings, so redirect those to an ignored file...
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            System.err.close();
+            System.setErr(new PrintStream(new FileOutputStream("err.log")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // set laf to darcula
+        try {
+            UIManager.setLookAndFeel(new DarculaLaf());
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
         //</editor-fold>
 

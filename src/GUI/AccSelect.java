@@ -101,6 +101,7 @@ public class AccSelect extends javax.swing.JFrame {
                 formWindowOpened(evt);
             }
         });
+        setTitle("Select Account Number");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setText("Select Bank Account to use in this session :");

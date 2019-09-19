@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
+import java.awt.event.WindowEvent;
 
 /**
  * @author kashyap
@@ -109,9 +110,10 @@ public class Payment extends javax.swing.JFrame {
         ecg = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Payment Portal");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Payment Portal");
+        jLabel1.setText("Please provide us with payment details...");
 
         jLabel3.setText("Pay to Account Number :");
 
@@ -224,7 +226,14 @@ public class Payment extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
+
+    private void formWindowClosed(WindowEvent evt) {
+        // go back to home page
+        System.out.println("go back simon");
+        (new Homepage(userid, acc)).setVisible(true);
+        this.dispose();
+    }
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {
         if(accNo.getText().equals("") || amount.getText().equals("") || uid.getText().equals("")){
