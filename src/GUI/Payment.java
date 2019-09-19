@@ -235,7 +235,6 @@ public class Payment extends javax.swing.JFrame {
 
     private void formWindowClosed(WindowEvent evt) {
         // go back to home page
-        System.out.println("go back simon");
         (new Homepage(userid, acc)).setVisible(true);
     }
 
