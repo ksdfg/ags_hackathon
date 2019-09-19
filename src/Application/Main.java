@@ -40,8 +40,9 @@ public class Main {
 
                             case "getAccounts":
                                 result.put(
-                                        "result", app.getAccounts(input.get("userid").toString())
+                                        "accounts", app.getAccounts(input.get("userid").toString())
                                 );
+                                result.put("result", true);
                                 break;
 
                             case "authorize":
@@ -61,11 +62,13 @@ public class Main {
 
                             default:
                                 System.out.println("bad operation");
-                                result.put("result", "unsuccessful");
+                                result.put("result", false);
+                                result.put("msg", "bad operation");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        result.put("result", "error");
+                        result.put("result", false);
+                        result.put("msg", e.getMessage());
                     }
 
                     // write result to app gui

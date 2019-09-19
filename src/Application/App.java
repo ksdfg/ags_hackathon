@@ -20,15 +20,17 @@ public class App implements AutoCloseable {
         ResultSet rs = da.getData(
                 "user",
                 "password",
-                "user_id = " + userid
+                "user_id = '" + userid + "'"
         );
 
         if (!rs.next())  // if result set has 0 rows
             throw new Exception("no such user");
 
-        return pwd.equals(rs.getString("password"));
-    }
+        if (!pwd.equals(rs.getString("password")))  // if password doesn't match
+            throw new Exception("wrong password");
 
+        return true;  // 帰りたい
+    }
 
     // get all accounts a user can authorize
     public ArrayList getAccounts(String userid) throws SQLException {
@@ -40,7 +42,7 @@ public class App implements AutoCloseable {
             a.add(rs.getInt("acc_no")); // add acc_no to the arraylist
         }
 
-        return a;   // kaeritai
+        return a;   // 帰りたい
     }
 
     // authorize a user to make a payment
@@ -54,7 +56,20 @@ public class App implements AutoCloseable {
         if (!resultSet.next())
             throw new Exception("No such authorization key");   // if resultSet has no rows
 
-        return resultSet.getString("value").equals(value);
+        if (!resultSet.getString("value").equals(value))
+            throw new Exception("Wrong authorization key");
+
+        return resultSet.getString("value").equals(value);  // 帰りたい
+    }
+
+    // create a user
+    public Boolean createUser(String userid, String pwd) throws SQLException {
+        da.addRow(
+                "user",
+                "'" + userid + "', '" + pwd + "'"
+        );
+
+        return true;  // 帰りたい
     }
 
     @Override
@@ -69,9 +84,10 @@ class TestApp {
         System.out.println();
 
         try (App app = new App()) {
+            System.out.println(app.login("hope.kartik", "AWUUV@19DEA"));
             System.out.println("it works...");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
     }

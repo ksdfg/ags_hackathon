@@ -5,6 +5,12 @@
  */
 package GUI;
 
+import ProjectLibs.ClientTools;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import javax.swing.*;
+
 /**
  * @author kashyap
  */
@@ -18,6 +24,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField pwd;
+
     /**
      * Creates new form NewJFrame
      */
@@ -41,13 +48,7 @@ public class Login extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -82,15 +83,9 @@ public class Login extends javax.swing.JFrame {
         setTitle("BANKING");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel1.setText("KSDFG Banking");
+        jLabel1.setText("MIT Banking");
 
         jLabel2.setText("Login ID :");
-
-        id.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                idActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Password :");
 
@@ -102,12 +97,6 @@ public class Login extends javax.swing.JFrame {
         });
 
         captcha.setText("Not a Robot");
-
-        pwd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwdActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -157,17 +146,29 @@ public class Login extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void idActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_idActionPerformed
-
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        new AccSelect().setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_loginButtonActionPerformed
+        if (captcha.isSelected()) { // if user has selected the "not a robot" checkbox
+            JSONObject request = new JSONObject();    //json to send to app server
+            request.put("operation", "login");
+            request.put("userid", id.getText());
+            request.put("password", pwd.getText());
 
-    private void pwdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_pwdActionPerformed
+            try (ClientTools client = new ClientTools("localhost", 8000)) {
+                client.out.writeUTF(request.toJSONString());  // send to server
+                JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
+
+                if ((Boolean) response.get("result")) {   // if request was successful
+                    new AccSelect().setVisible(true);
+                    this.dispose();
+                } else {    // in case of error
+                    JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {  // if user is robot
+            JOptionPane.showMessageDialog(rootPane, "No login for robots!");
+        }
+    }//GEN-LAST:event_loginButtonActionPerformed
     // End of variables declaration//GEN-END:variables
 }

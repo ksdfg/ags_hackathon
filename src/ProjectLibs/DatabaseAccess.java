@@ -54,6 +54,7 @@ public class DatabaseAccess {
         ResultSet resultSet = null;     //will return null in case of error
         try {
             //fire query
+            System.out.println("Select "+columns+" from "+tablename+" where "+conditions);
             resultSet = statement.executeQuery(
                     "Select "+columns+" from "+tablename+" where "+conditions
             );

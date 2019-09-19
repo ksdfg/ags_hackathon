@@ -34,8 +34,10 @@ public class Bank implements AutoCloseable {
             throw new Exception("Account number " + acc_no + " not in bank");
         }
 
-        int acc_pin = resultSet.getInt("PIN");  // retrieve the pin
-        return acc_pin == pin;  // check if pin is correct
+        if (pin != resultSet.getInt("PIN")) // retrieve the pin
+            throw new Exception("Incorrect PIN");
+
+        return true;  // check if pin is correct
     }
 
     public ArrayList getTransactions(int acc) throws Exception {
@@ -67,7 +69,7 @@ public class Bank implements AutoCloseable {
             a.add(v);   // add transaction to arraylist
         }
 
-        return a;   // kaeritai
+        return a;   // 帰りたい
     }
 
     // add a transaction to the user

@@ -5,6 +5,8 @@
  */
 package GUI;
 
+import javax.swing.*;
+
 /**
  * @author kashyap
  */
@@ -205,6 +207,14 @@ public class Payment extends javax.swing.JFrame {
     }//GEN-LAST:event_accNoActionPerformed
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payActionPerformed
+        JPasswordField pf = new JPasswordField();
+        int okCxl = JOptionPane.showConfirmDialog(rootPane, pf, "Enter Pin",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (okCxl == JOptionPane.OK_OPTION) {
+            String password = new String(pf.getPassword());
+            System.out.println("You entered: " + password);
+        }
         this.dispose();
     }//GEN-LAST:event_payActionPerformed
 
