@@ -25,6 +25,7 @@ public class Payment extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JButton pay;
     private javax.swing.JTextField uid;
+
     /**
      * Creates new form NewJFrame3
      */
@@ -97,29 +98,12 @@ public class Payment extends javax.swing.JFrame {
 
         jLabel3.setText("Pay to Account Number :");
 
-        accNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                accNoActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Amount :");
-
-        amount.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                amountActionPerformed(evt);
-            }
-        });
 
         jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         jLabel6.setText("Verify Using Biometrics");
 
         fingerprint.setText("Fingerprint");
-        fingerprint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fingerprintActionPerformed(evt);
-            }
-        });
 
         facial.setText("Facial Biometrics");
 
@@ -202,10 +186,6 @@ public class Payment extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void accNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accNoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_accNoActionPerformed
-
     private void payActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payActionPerformed
         JPasswordField pf = new JPasswordField();
         int okCxl = JOptionPane.showConfirmDialog(rootPane, pf, "Enter Pin",
@@ -217,13 +197,5 @@ public class Payment extends javax.swing.JFrame {
         }
         this.dispose();
     }//GEN-LAST:event_payActionPerformed
-
-    private void amountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_amountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_amountActionPerformed
-
-    private void fingerprintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fingerprintActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fingerprintActionPerformed
     // End of variables declaration//GEN-END:variables
 }
