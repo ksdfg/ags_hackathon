@@ -1,16 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
+
+import ProjectLibs.ClientTools;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * @author kashyap
  */
 public class AccSelect extends javax.swing.JFrame {
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
     private javax.swing.JList accs;
     private javax.swing.JButton goHome;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
@@ -20,17 +25,24 @@ public class AccSelect extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JScrollPane jScrollPane1;
+    //</editor-fold>
+
+    // the account in question - the one that logged in
+    public String userid;
+
     /**
-     * Creates new form NewJFrame1
+     * Creates new form AccSelect
      */
-    public AccSelect() {
+    public AccSelect(String userid) {
+        this.userid = userid;
         initComponents();
     }
+    public AccSelect() {initComponents();}
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -43,16 +55,9 @@ public class AccSelect extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AccSelect.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AccSelect.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AccSelect.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AccSelect.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -95,21 +100,20 @@ public class AccSelect extends javax.swing.JFrame {
         jMenu3.setText("jMenu3");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setText("Select Bank Account to use in this session :");
 
         accs.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         accs.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-
-            public int getSize() {
-                return strings.length;
-            }
-
-            public Object getElementAt(int i) {
-                return strings[i];
-            }
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(accs);
 
@@ -154,9 +158,33 @@ public class AccSelect extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void goHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goHomeActionPerformed
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {
+        JSONObject request = new JSONObject();
+        request.put("operation", "get accounts");
+        request.put("userid", userid);
+
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
+
+            if ((Boolean) response.get("result")) {   // if request was successful
+                System.out.println(response.get("accounts"));
+                Vector<Long> v = new Vector<>();
+                JSONArray jsonArray = (JSONArray) response.get("accounts");
+                for(Object i : jsonArray){
+                    v.add((long) i);
+                }
+                accs.setListData(v);
+            } else {    // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void goHomeActionPerformed(java.awt.event.ActionEvent evt) {
         new Homepage().setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_goHomeActionPerformed
-    // End of variables declaration//GEN-END:variables
+    }
 }

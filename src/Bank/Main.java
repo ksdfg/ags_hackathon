@@ -32,11 +32,11 @@ public class Main {
                     try {
                         switch (operation) {
 
-                            case "getTransactions":
+                            case "get transactions":
                                 result.put("result", bank.getTransactions((int) input.get("acc")));
                                 break;
 
-                            case "makeTransaction":
+                            case "make transaction":
                                 // if the pin is right
                                 if (bank.authenticate((int) input.get("send_acc"), (int) input.get("pin")))
                                     // make the transaction

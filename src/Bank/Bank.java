@@ -119,7 +119,7 @@ public class Bank implements AutoCloseable {
             try {
                 da.addRow(
                         "transactions",
-                        abs((new Random()).nextLong()) + ", " + send_acc + ", " + recv_acc + ", " + (amount) +
+                        abs((new Random()).nextInt()) + ", " + send_acc + ", " + recv_acc + ", " + (amount) +
                                 ", '" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()) + "'"
                 );
                 break;

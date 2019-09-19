@@ -38,7 +38,7 @@ public class Main {
                                 );
                                 break;
 
-                            case "getAccounts":
+                            case "get accounts":
                                 result.put(
                                         "accounts", app.getAccounts(input.get("userid").toString())
                                 );
@@ -58,9 +58,9 @@ public class Main {
                                 );
                                 break;
 
-                            case "getTransactions": // bank ka kaam
+                            case "get transactions": // bank ka kaam
 
-                            case "makeTransaction": // bank ka kaam
+                            case "make transaction": // bank ka kaam
                                 try (ClientTools client = new ClientTools("localhost", 5000)) {   // change localhost to bank ip
                                     client.out.writeUTF(input.toJSONString());  // write to bank
                                     result = (JSONObject) (new JSONParser()).parse(client.in.readUTF());   // read from bank

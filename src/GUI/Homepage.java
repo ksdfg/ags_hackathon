@@ -5,12 +5,14 @@
  */
 package GUI;
 
+import javax.swing.*;
+
 /**
  * @author kashyap
  */
 public class Homepage extends javax.swing.JFrame {
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
     private javax.swing.JLabel balance;
     private javax.swing.JLabel bank;
     private javax.swing.JLabel jLabel1;
@@ -28,6 +30,8 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JLabel name;
     private javax.swing.JButton pay;
     private javax.swing.JTable transactions;
+    //</editor-fold>
+
     /**
      * Creates new form NewJFrame2
      */
@@ -39,7 +43,6 @@ public class Homepage extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
@@ -51,16 +54,9 @@ public class Homepage extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Homepage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -105,23 +101,7 @@ public class Homepage extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         transactions.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null},
-                        {null, null, null}
-                },
+                new Object[][]{},
                 new String[]{
                         "Description", "Amount", "Date"
                 }
@@ -149,7 +129,7 @@ public class Homepage extends javax.swing.JFrame {
         jLabel5.setText("Account Balance :");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel6.setText("Branch :");
+        jLabel6.setText("Bank :");
 
         name.setText("           ");
 
