@@ -109,8 +109,13 @@ public class Payment extends javax.swing.JFrame {
         pay = new javax.swing.JButton();
         ecg = new javax.swing.JRadioButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Payment Portal");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("Please provide us with payment details...");
@@ -232,7 +237,6 @@ public class Payment extends javax.swing.JFrame {
         // go back to home page
         System.out.println("go back simon");
         (new Homepage(userid, acc)).setVisible(true);
-        this.dispose();
     }
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {
