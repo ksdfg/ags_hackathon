@@ -70,7 +70,7 @@ public class Bank implements AutoCloseable {
                 "t.sender = s.acc_no and t.receiver = r.acc_no",
                 "t.sender as sno, s.name as sname, t.receiver as rno, r.name as rname, t.amount as amount," +
                         " t.timestamp as timestamp",
-                "t.sender = " + acc + " or t.receiver = " + acc + " order by t.timestamp"
+                "t.sender = " + acc + " or t.receiver = " + acc + " order by t.timestamp desc"
         );
 
         ArrayList<ArrayList<Object>> a = new ArrayList<>();    // map to store all transactions
@@ -98,7 +98,7 @@ public class Bank implements AutoCloseable {
     }
 
     // add a transaction to the user
-    public void makeTransaction(int send_acc, int recv_acc, double amount) throws Exception {
+    public boolean makeTransaction(int send_acc, int recv_acc, double amount) throws Exception {
         // get current balance and trans_table of acc_no - send
         ResultSet sender = da.getData(
                 "account", "balance", "acc_no = " + send_acc
@@ -144,7 +144,7 @@ public class Bank implements AutoCloseable {
             try {
                 da.addRow(
                         "transactions",
-                        abs((new Random()).nextInt()) + ", " + send_acc + ", " + recv_acc + ", " + (amount) +
+                        abs((new Random()).nextInt()) + ", " + recv_acc + ", " + send_acc + ", " + (amount) +
                                 ", '" + DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(LocalDateTime.now()) + "'"
                 );
                 break;
@@ -153,6 +153,7 @@ public class Bank implements AutoCloseable {
             }
         }
 
+        return true;
     }
 
     @Override

@@ -188,7 +188,7 @@ public class AccSelect extends javax.swing.JFrame {
 
     private void goHomeActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            new Homepage((int) accs.getSelectedValue()).setVisible(true);   // pass acc no. to next form
+            new Homepage(userid, (int) accs.getSelectedValue()).setVisible(true);   // pass acc no. to next form
             this.dispose();
         } catch (NullPointerException e) { // if no account is selected
             JOptionPane.showMessageDialog(rootPane, "Please select an account");

@@ -38,16 +38,21 @@ public class Main {
                                 break;
 
                             case "get transactions":
+                                System.out.println(bank.getTransactions(Integer.parseInt(input.get("acc").toString())));
                                 result.put("transactions", bank.getTransactions(Integer.parseInt(input.get("acc").toString())));
                                 result.put("result", true);
                                 break;
 
                             case "make transaction":
                                 // if the pin is right
-                                if (bank.authenticate((int) input.get("send_acc"), (int) input.get("pin")))
+                                if (bank.authenticate(Integer.parseInt(input.get("send_acc").toString()), Integer.parseInt(input.get("pin").toString())))
                                     // make the transaction
-                                    bank.makeTransaction((int) input.get("send_acc"), (int) input.get("recv_acc"),
-                                            (double) input.get("amount"));
+                                    result.put("result",
+                                            bank.makeTransaction(Integer.parseInt(input.get("send_acc").toString()),
+                                                    Integer.parseInt(input.get("recv_acc").toString()),
+                                                    (double) input.get("amount")
+                                            )
+                                    );
                                 break;
 
                             default:

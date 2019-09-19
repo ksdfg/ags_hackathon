@@ -51,7 +51,7 @@ public class App implements AutoCloseable {
         ResultSet resultSet = da.getData(
                 "auth_keys",
                 "value",
-                "user_id = " + userid + " and type = " + auth_type
+                "user_id = '" + userid + "' and type = '" + auth_type + "'"
         );
 
         if (!resultSet.next())

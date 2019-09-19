@@ -91,8 +91,6 @@ public class Login extends javax.swing.JFrame {
 
         captcha.setText("Not a Robot");
 
-        pwd.setText("pwd");
-
         register.setText("Register");
         register.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

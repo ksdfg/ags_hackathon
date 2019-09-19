@@ -41,13 +41,15 @@ public class Homepage extends javax.swing.JFrame {
     //</editor-fold>
 
     private int acc;
+    private String userid;
     /**
      * Creates new form NewJFrame2
      */
     public Homepage() {
         initComponents();
     }
-    public Homepage(int acc){
+    public Homepage(String userid, int acc){
+        this.userid = userid;
         this.acc = acc;
         initComponents();
     }
@@ -283,7 +285,7 @@ public class Homepage extends javax.swing.JFrame {
     }
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {
-        new Payment().setVisible(true);
+        new Payment(userid, acc).setVisible(true);
         this.dispose();
     }
 }
