@@ -8,7 +8,6 @@ import org.json.simple.parser.JSONParser;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.Vector;
 
 /**
@@ -104,7 +103,7 @@ public class AccSelect extends javax.swing.JFrame {
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowOpened(WindowEvent e) {
-                formWindowOpened(e);
+                formWindowOpened();
             }
         });
         setTitle("Select Bank Account");
@@ -162,14 +161,65 @@ public class AccSelect extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void addAccActionPerformed(ActionEvent evt) {
+        JSONObject request = new JSONObject(), response;
+
         int acc = Integer.parseInt(
                 JOptionPane.showInputDialog(rootPane, "Enter account number",
-                "Add Account", JOptionPane.QUESTION_MESSAGE)
-        );
+                        "Add Account", JOptionPane.QUESTION_MESSAGE)
+        );  // get acc no. to add
 
+        //<editor-fold defaultstate="collapsed" desc=" send a 'get otp' request to bank ">
+        request.put("operation", "get otp");
+        request.put("acc", acc);
+        int otp = 0;
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {   // if request was successful
+                otp = Integer.parseInt(response.get("otp").toString());
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //</editor-fold>
+
+        if (
+                otp == Integer.parseInt(
+                        JOptionPane.showInputDialog(rootPane, "Enter otp sent to registered phone number",
+                                "Add Account", JOptionPane.QUESTION_MESSAGE)
+                )  // get otp from user
+        ) {
+            //<editor-fold defaultstate="collapsed" desc=" link account to user ">
+            request.put("operation", "link acc");
+            request.put("userid", userid);
+
+            try (ClientTools client = new ClientTools("localhost", 8000)) {
+                client.out.writeUTF(request.toJSONString());
+                response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+                if ((boolean) response.get("result")) {   // if request was successful
+                    JOptionPane.showMessageDialog(rootPane, "Account added!", "Success",
+                            JOptionPane.PLAIN_MESSAGE);
+                    formWindowOpened();
+                } else {  // in case of error
+                    JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //</editor-fold>
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "incorrect otp", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
     }
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {
+    private void formWindowOpened() {
         JSONObject request = new JSONObject();
         request.put("operation", "get accounts");
         request.put("userid", userid);
@@ -179,16 +229,14 @@ public class AccSelect extends javax.swing.JFrame {
             JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
 
             if ((Boolean) response.get("result")) {   // if request was successful
-
                 Vector<Integer> v = new Vector<>(); // vector to store all accounts
                 JSONArray jsonArray = (JSONArray) response.get("accounts"); // json array we got in response
                 // transfer stuff from json array to vector
                 for (Object i : jsonArray)
                     v.add(Integer.parseInt(i.toString()));
-
                 accs.setListData(v);
             } else {    // in case of error
-                JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();

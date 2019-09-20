@@ -262,7 +262,7 @@ public class Payment extends javax.swing.JFrame {
             response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
 
             if (!(Boolean) response.get("result")) {   // if error occured
-                JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (Exception e) {
@@ -293,7 +293,7 @@ public class Payment extends javax.swing.JFrame {
                 // go back to home page
                 this.dispose();
             } else {    // in case of error
-                JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -180,7 +180,7 @@ public class Login extends javax.swing.JFrame {
                     new AccSelect(id.getText()).setVisible(true);   // pass user id to next frame
                     this.dispose();
                 } else {    // in case of error
-                    JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+                    JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

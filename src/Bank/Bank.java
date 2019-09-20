@@ -2,6 +2,7 @@ package Bank;
 
 import ProjectLibs.DatabaseAccess;
 
+import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -153,7 +154,26 @@ public class Bank implements AutoCloseable {
             }
         }
 
-        return true;
+        return true;   // 帰りたい
+    }
+
+    // send otp to registered number... lol
+    public int sendOTP(int acc) throws Exception {
+        int otp = (new Random()).nextInt(8999) + 1000;  // generate random otp
+
+        // get registered phone number
+        ResultSet resultSet = da.getData("account", "phone_no", "acc_no = " + acc);
+        if (!resultSet.next())
+            throw new Exception("No such account");
+
+        JOptionPane.showMessageDialog(null,
+                "OTP " + otp + " sent to phone number " +
+                        resultSet.getLong("phone_no"),
+                "OTP",
+                JOptionPane.INFORMATION_MESSAGE
+                );    // "sending" otp
+
+        return otp; // 帰りたい
     }
 
     @Override

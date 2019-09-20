@@ -17,7 +17,7 @@ public class App implements AutoCloseable {
     }
 
     // check if login credentials are correct
-    public Boolean login(String userid, String pwd) throws Exception {
+    public boolean login(String userid, String pwd) throws Exception {
         ResultSet rs = da.getData(
                 "user",
                 "password",
@@ -47,7 +47,7 @@ public class App implements AutoCloseable {
     }
 
     // authorize a user to make a payment
-    public Boolean authorize(String userid, String auth_type, String value) throws Exception {
+    public boolean authorize(String userid, String auth_type, String value) throws Exception {
         ResultSet resultSet = da.getData(
                 "auth_keys",
                 "value",
@@ -64,10 +64,20 @@ public class App implements AutoCloseable {
     }
 
     // create a user
-    public Boolean createUser(String userid, String pwd) throws SQLException {
+    public boolean createUser(String userid, String pwd) throws SQLException {
         da.addRow(
                 "user",
                 "'" + userid + "', '" + pwd + "'"
+        );
+
+        return true;  // 帰りたい
+    }
+    
+    // link bank account to user
+    public boolean linkAccount(String userid, int acc) throws SQLException {
+        da.addRow(
+                "authorizes",
+                "'" + userid + "', " + acc
         );
 
         return true;  // 帰りたい

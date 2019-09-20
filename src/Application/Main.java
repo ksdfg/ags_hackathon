@@ -48,7 +48,7 @@ public class Main {
                             case "authorize":
                                 result.put("result",
                                         app.authorize(input.get("userid").toString(), input.get("type").toString(),
-                                        input.get("value").toString())
+                                                input.get("value").toString())
                                 );
 
                             case "create user":
@@ -57,6 +57,13 @@ public class Main {
                                         app.createUser(input.get("userid").toString(), input.get("pwd").toString())
                                 );
                                 break;
+
+                            case "link acc":
+                                result.put("result", app.linkAccount(input.get("userid").toString(),
+                                        Integer.parseInt(input.get("acc").toString())));
+                                break;
+
+                            case "get otp":
 
                             case "get details":      // bank ka kaam
 

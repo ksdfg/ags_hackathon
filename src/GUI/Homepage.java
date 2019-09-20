@@ -283,7 +283,7 @@ public class Homepage extends javax.swing.JFrame {
                     model.addRow(v);    // add the vector as a row in the table
                 }
             } else {    // in case of error
-                JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -301,7 +301,7 @@ public class Homepage extends javax.swing.JFrame {
                 balance.setText(details.get("balance").toString());
                 bank.setText(details.get("bank").toString());
             } else {    // in case of error
-                JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -55,6 +55,11 @@ public class Main {
                                     );
                                 break;
 
+                            case "get otp":
+                                result.put("otp", bank.sendOTP(Integer.parseInt(input.get("acc").toString())));
+                                result.put("result", true);
+                                break;
+
                             default:
                                 System.out.println("bad operation");
                                 result.put("result", false);
