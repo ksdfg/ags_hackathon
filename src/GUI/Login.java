@@ -7,6 +7,8 @@ import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;

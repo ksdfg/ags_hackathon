@@ -53,7 +53,7 @@ public class Payment extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -124,7 +124,7 @@ public class Payment extends javax.swing.JFrame {
 
         jLabel4.setText("Amount :");
 
-        jLabel6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("Verify Using Biometrics");
 
         fingerprint.setText("Fingerprint");
@@ -235,8 +235,9 @@ public class Payment extends javax.swing.JFrame {
     }
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {
-        if(accNo.getText().equals("") || amount.getText().equals("") || uid.getText().equals("")){
-            JOptionPane.showMessageDialog(rootPane, "Please fill all details");
+        if (accNo.getText().equals("") || amount.getText().equals("") || uid.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Please fill all details", "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -249,7 +250,8 @@ public class Payment extends javax.swing.JFrame {
             request.put("type", biometrics.getSelection().getActionCommand());
             request.put("value", uid.getText());
         } catch (NullPointerException e) { // if no biometrics are chosen
-            JOptionPane.showMessageDialog(rootPane, "Select atleast one biometric");
+            JOptionPane.showMessageDialog(rootPane, "Select atleast one biometric", "Error",
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 

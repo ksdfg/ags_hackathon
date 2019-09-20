@@ -111,10 +111,16 @@ public class Account extends javax.swing.JFrame {
 
         jLabel2.setText("jLabel2");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
+            }
+
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
             }
         });
         setTitle("Bank Account");
@@ -236,6 +242,10 @@ public class Account extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
+    private void formWindowClosed(WindowEvent evt) {
+        (new Homepage(userid)).setVisible(true);    // go back to homepage
+    }
 
     private void modifyActionPerformed(ActionEvent evt) {
         JPanel panel = new JPanel();
