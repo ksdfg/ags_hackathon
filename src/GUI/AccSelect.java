@@ -107,28 +107,23 @@ public class AccSelect extends javax.swing.JFrame {
                 formWindowOpened(e);
             }
         });
+        setTitle("Select Bank Account");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabel1.setText("Select Bank Account to use in this session :");
 
         accs.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jScrollPane1.setViewportView(accs);
+        DefaultListCellRenderer renderer = (DefaultListCellRenderer) accs.getCellRenderer();
+        renderer.setHorizontalAlignment(SwingConstants.CENTER);
 
         goHome.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         goHome.setText("Proceed");
-        goHome.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goHomeActionPerformed(evt);
-            }
-        });
+        goHome.addActionListener(evt -> goHomeActionPerformed(evt));
 
         addAcc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         addAcc.setText("Add Account");
-        addAcc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addAccActionPerformed(evt);
-            }
-        });
+        addAcc.addActionListener(evt -> addAccActionPerformed(evt));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,6 +162,10 @@ public class AccSelect extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void addAccActionPerformed(ActionEvent evt) {
+        int acc = Integer.parseInt(
+                JOptionPane.showInputDialog(rootPane, "Enter account number",
+                "Add Account", JOptionPane.QUESTION_MESSAGE)
+        );
 
     }
 
