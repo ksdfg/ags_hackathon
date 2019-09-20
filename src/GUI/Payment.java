@@ -143,11 +143,7 @@ public class Payment extends javax.swing.JFrame {
 
         pay.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         pay.setText("PAY");
-        pay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                payActionPerformed(evt);
-            }
-        });
+        pay.addActionListener(evt -> payActionPerformed(evt));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,7 +231,7 @@ public class Payment extends javax.swing.JFrame {
 
     private void formWindowClosed(WindowEvent evt) {
         // go back to home page
-        (new Homepage(userid, acc)).setVisible(true);
+        (new Account(userid, acc)).setVisible(true);
     }
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {

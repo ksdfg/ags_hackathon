@@ -6,7 +6,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicLookAndFeel;
 import java.awt.event.ActionEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -90,20 +89,12 @@ public class Login extends javax.swing.JFrame {
         jLabel3.setText("Password :");
 
         login.setText("LOGIN");
-        login.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loginActionPerformed(evt);
-            }
-        });
+        login.addActionListener(evt -> loginActionPerformed(evt));
 
         captcha.setText("Not a Robot");
 
         register.setText("Register");
-        register.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registerActionPerformed(evt);
-            }
-        });
+        register.addActionListener(evt -> registerActionPerformed(evt));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -177,7 +168,7 @@ public class Login extends javax.swing.JFrame {
                 JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
 
                 if ((Boolean) response.get("result")) {   // if request was successful
-                    new AccSelect(id.getText()).setVisible(true);   // pass user id to next frame
+                    new Homepage(id.getText()).setVisible(true);   // pass user id to next frame
                     this.dispose();
                 } else {    // in case of error
                     JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
