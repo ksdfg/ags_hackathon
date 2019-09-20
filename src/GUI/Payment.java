@@ -132,7 +132,7 @@ public class Payment extends javax.swing.JFrame {
         biometrics.add(fingerprint);
 
         facial.setText("Facial");
-        facial.setActionCommand("facial");
+        facial.setActionCommand("face");
         biometrics.add(facial);
 
         ecg.setText("ECG");
@@ -291,7 +291,6 @@ public class Payment extends javax.swing.JFrame {
             if ((Boolean) response.get("result")) {   // if request was successful
                 JOptionPane.showMessageDialog(rootPane, "Success!");
                 // go back to home page
-                (new Homepage(userid, acc)).setVisible(true);
                 this.dispose();
             } else {    // in case of error
                 JOptionPane.showMessageDialog(rootPane, response.get("msg").toString());

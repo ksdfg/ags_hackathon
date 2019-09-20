@@ -12,6 +12,7 @@ import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.util.Vector;
 
@@ -37,18 +38,21 @@ public class Homepage extends javax.swing.JFrame {
     private java.awt.Label label1;
     private javax.swing.JLabel name;
     private javax.swing.JButton pay;
+    private javax.swing.JButton modify;
     private javax.swing.JTable transactions;
     //</editor-fold>
 
     private int acc;
     private String userid;
+
     /**
      * Creates new form NewJFrame2
      */
     public Homepage() {
         initComponents();
     }
-    public Homepage(String userid, int acc){
+
+    public Homepage(String userid, int acc) {
         this.userid = userid;
         this.acc = acc;
         initComponents();
@@ -91,6 +95,7 @@ public class Homepage extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         transactions = new javax.swing.JTable();
         pay = new javax.swing.JButton();
+        modify = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -129,6 +134,14 @@ public class Homepage extends javax.swing.JFrame {
         pay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 payActionPerformed(evt);
+            }
+        });
+
+        modify.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        modify.setText("Modify Account");
+        modify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyActionPerformed(evt);
             }
         });
 
@@ -171,33 +184,37 @@ public class Homepage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addContainerGap()
-                                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(58, 58, 58)
                                                 .addComponent(pay))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(layout.createSequentialGroup()
+                                                        .addContainerGap()
+                                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createSequentialGroup()
+                                                        .addContainerGap()
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addComponent(jLabel4)
+                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                        .addComponent(name)
+                                                                        .addGap(19, 19, 19))
+                                                                .addGroup(layout.createSequentialGroup()
+                                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                                                        .addComponent(jLabel6)
+                                                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                                        .addComponent(bank))
+                                                                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                                                        .addComponent(jLabel5)
+                                                                                        .addGap(18, 18, 18)
+                                                                                        .addComponent(balance)))
+                                                                        .addGap(0, 0, Short.MAX_VALUE)))))
                                         .addGroup(layout.createSequentialGroup()
                                                 .addContainerGap()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jLabel4)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(name)
-                                                                .addGap(19, 19, 19))
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                                                .addComponent(jLabel6)
-                                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                                .addComponent(bank))
-                                                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                                                .addComponent(jLabel5)
-                                                                                .addGap(18, 18, 18)
-                                                                                .addComponent(balance)))
-                                                                .addGap(0, 0, Short.MAX_VALUE)))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                                                .addComponent(modify)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -228,11 +245,17 @@ public class Homepage extends javax.swing.JFrame {
                                                         .addComponent(bank))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(pay)
-                                                .addGap(68, 68, 68))))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(modify)
+                                                .addGap(35, 35, 35))))
         );
 
         pack();
     }// </editor-fold>
+
+    private void modifyActionPerformed(ActionEvent evt) {
+
+    }
 
     private void formWindowOpened(WindowEvent evt) {
         JSONObject request = new JSONObject(), response;
@@ -248,12 +271,13 @@ public class Homepage extends javax.swing.JFrame {
                 DefaultTableModel model = (DefaultTableModel) transactions.getModel();
                 JSONArray jsonArray = (JSONArray) response.get("transactions");
 
-                Vector v;   JSONArray row;  // temp vars to iterate
-                for(Object i : jsonArray) {
+                Vector v;
+                JSONArray row;  // temp vars to iterate
+                for (Object i : jsonArray) {
                     v = new Vector();
                     row = (JSONArray) i;
 
-                    for(Object j : row) // add all elements in the json array to the vector
+                    for (Object j : row) // add all elements in the json array to the vector
                         v.add(j);
 
                     model.addRow(v);    // add the vector as a row in the table
