@@ -70,6 +70,7 @@ public class DatabaseAccess {
 
     // insert a row into a table
     public void addRow(String tablename, String values) throws SQLException {
+        System.out.println("insert into " + tablename + " values (" + values + ")");    // for monitoring
         // run insert stmt
         statement.executeUpdate(
                 "insert into " + tablename + " values (" + values + ")"

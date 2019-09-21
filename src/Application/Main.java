@@ -50,11 +50,13 @@ public class Main {
                                         app.authorize(input.get("userid").toString(), input.get("type").toString(),
                                                 input.get("value").toString())
                                 );
+                                break;
 
                             case "create user":
                                 result.put(
                                         "result",
-                                        app.createUser(input.get("userid").toString(), input.get("pwd").toString())
+                                        app.createUser(input.get("name").toString(),
+                                                input.get("userid").toString(), input.get("pwd").toString())
                                 );
                                 break;
 

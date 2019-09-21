@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import ProjectLibs.ClientTools;
@@ -12,9 +7,6 @@ import org.json.simple.parser.JSONParser;
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 
-/**
- * @author kashyap
- */
 public class Payment extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc=" All the frame components ">
@@ -36,6 +28,7 @@ public class Payment extends javax.swing.JFrame {
 
     private String userid;
     private int acc;
+
 
     /**
      * Creates new form NewJFrame3
@@ -75,7 +68,6 @@ public class Payment extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Payment.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -118,7 +110,7 @@ public class Payment extends javax.swing.JFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel1.setText("Please provide us with payment details...");
+        jLabel1.setText("Payment Details");
 
         jLabel3.setText("Pay to Account Number :");
 
@@ -227,6 +219,7 @@ public class Payment extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void formWindowClosed(WindowEvent evt) {
@@ -281,6 +274,7 @@ public class Payment extends javax.swing.JFrame {
         request.put("recv_acc", accNo.getText());
         request.put("pin", pf.getText());
         request.put("amount", Double.parseDouble(amount.getText()));
+        System.out.println(amount.getText());
 
         try (ClientTools client = new ClientTools("localhost", 8000)) {
             client.out.writeUTF(request.toJSONString());

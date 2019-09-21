@@ -7,15 +7,10 @@ import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 
-/**
- * @author kashyap
- */
 public class Login extends javax.swing.JFrame {
 
     //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
@@ -81,7 +76,7 @@ public class Login extends javax.swing.JFrame {
         register = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("BANKING");
+        setTitle("Login");
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
         jLabel1.setText("MIT NetBanking");
@@ -151,11 +146,13 @@ public class Login extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }
     // </editor-fold>
 
     private void registerActionPerformed(ActionEvent evt) {
-
+        (new Registration()).setVisible(true);  // open registration form
+        this.dispose();
     }
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {

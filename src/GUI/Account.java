@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import ProjectLibs.ClientTools;
@@ -16,9 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.util.Vector;
 
-/**
- * @author kashyap
- */
 public class Account extends javax.swing.JFrame {
 
     //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
@@ -43,6 +35,7 @@ public class Account extends javax.swing.JFrame {
 
     private int acc;
     private String userid;
+    private boolean isClosedByUser = true;
 
     /**
      * Creates new form NewJFrame2
@@ -60,7 +53,7 @@ public class Account extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
@@ -120,7 +113,8 @@ public class Account extends javax.swing.JFrame {
 
             @Override
             public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+                if (isClosedByUser)
+                    formWindowClosed(evt);
             }
         });
         setTitle("Bank Account");
@@ -241,6 +235,7 @@ public class Account extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>
 
     private void formWindowClosed(WindowEvent evt) {
@@ -308,6 +303,7 @@ public class Account extends javax.swing.JFrame {
 
     private void payActionPerformed(java.awt.event.ActionEvent evt) {
         new Payment(userid, acc).setVisible(true);
+        isClosedByUser = false;
         this.dispose();
     }
 }

@@ -2,7 +2,6 @@ package Application;
 
 import ProjectLibs.DatabaseAccess;
 
-import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -64,15 +63,15 @@ public class App implements AutoCloseable {
     }
 
     // create a user
-    public boolean createUser(String userid, String pwd) throws SQLException {
+    public boolean createUser(String name, String userid, String pwd) throws SQLException {
         da.addRow(
                 "user",
-                "'" + userid + "', '" + pwd + "'"
+                "'" + userid + "', '" + name + "', '" + pwd + "'"
         );
 
         return true;  // 帰りたい
     }
-    
+
     // link bank account to user
     public boolean linkAccount(String userid, int acc) throws SQLException {
         da.addRow(

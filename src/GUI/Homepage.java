@@ -10,13 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowEvent;
 import java.util.Vector;
 
-/**
- * @author kashyap
- */
 public class Homepage extends javax.swing.JFrame {
 
     // the account in question - the one that logged in
-    public String userid;
+    private String userid;
+    private boolean isClosedByUser = true;
     //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
     private javax.swing.JList accs;
     private javax.swing.JButton selectAcc;
@@ -113,16 +111,17 @@ public class Homepage extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                if (isClosedByUser)
+                    formWindowClosed(evt);
             }
-        });
-        setTitle("Homepage");
-        addWindowListener(new java.awt.event.WindowAdapter() {
+
+            @Override
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened();
             }
         });
+        setTitle("Homepage");
 
         jPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null,
                 "Select account for netbanking session", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION,
@@ -258,6 +257,7 @@ public class Homepage extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }
     // </editor-fold>
 
@@ -277,7 +277,7 @@ public class Homepage extends javax.swing.JFrame {
 
     }
 
-    private void addBioActionPerformed(ActionEvent evt) {
+    void addBioActionPerformed(ActionEvent evt) {
 
     }
 
@@ -285,7 +285,7 @@ public class Homepage extends javax.swing.JFrame {
 
     }
 
-    private void linkAccActionPerformed(ActionEvent evt) {
+    void linkAccActionPerformed(ActionEvent evt) {
         JSONObject request = new JSONObject(), response;
 
         int acc = Integer.parseInt(
@@ -370,7 +370,8 @@ public class Homepage extends javax.swing.JFrame {
 
     private void selectAccActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            new Account(userid, (int) accs.getSelectedValue()).setVisible(true);   // pass acc no. to next form
+            new Account(userid, (int) accs.getSelectedValue()).setVisible(true);   // pass acc no. to next
+            isClosedByUser = false;
             this.dispose();
         } catch (NullPointerException e) { // if no account is selected
             JOptionPane.showMessageDialog(rootPane, "Please select an account", "Error", JOptionPane.ERROR_MESSAGE);
