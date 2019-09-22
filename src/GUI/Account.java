@@ -45,6 +45,7 @@ public class Account extends javax.swing.JFrame {
     }
 
     public Account(String userid, int acc) {
+        System.out.println("test");
         this.userid = userid;
         this.acc = acc;
         initComponents();
@@ -263,16 +264,8 @@ public class Account extends javax.swing.JFrame {
                 DefaultTableModel model = (DefaultTableModel) transactions.getModel();
                 JSONArray jsonArray = (JSONArray) response.get("transactions");
 
-                Vector v;
-                JSONArray row;  // temp vars to iterate
                 for (Object i : jsonArray) {
-                    v = new Vector();
-                    row = (JSONArray) i;
-
-                    for (Object j : row) // add all elements in the json array to the vector
-                        v.add(j);
-
-                    model.addRow(v);    // add the vector as a row in the table
+                    model.addRow(new Vector((JSONArray) i));    // add the vector as a row in the table
                 }
             } else {    // in case of error
                 JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);

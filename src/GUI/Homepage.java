@@ -312,6 +312,56 @@ public class Homepage extends javax.swing.JFrame {
     }
 
     private void rmBioActionPerformed(ActionEvent evt) {
+        JSONObject request = new JSONObject(), response;
+
+        //<editor-fold defaultstate="collapsed" desc=" display all current biometrics ">
+        request.put("operation", "get bios");
+        request.put("userid", userid);
+        JList<String> bios = new JList<>();
+
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {
+                bios.setListData(new Vector((JSONArray) response.get("bios")));
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //</editor-fold>
+
+        // get which biometric to remove from the user
+        String bioToRemove;
+        try {
+            JOptionPane.showMessageDialog(rootPane, bios, "Select a biometric to remove",
+                    JOptionPane.QUESTION_MESSAGE);
+            bioToRemove = bios.getSelectedValue().replace(" recognition", "");
+        } catch (NullPointerException e) { // if no account is selected
+            JOptionPane.showMessageDialog(rootPane, "Please select a biometric", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        //<editor-fold defaultstate="collapsed" desc=" Remove selected biometric ">
+        request.put("operation", "rm bio");
+        request.put("type", bioToRemove);
+
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {
+                JOptionPane.showMessageDialog(rootPane, "Biometric removed!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //</editor-fold>
 
     }
 
@@ -353,6 +403,11 @@ public class Homepage extends javax.swing.JFrame {
         //get value of biometric
         String val = JOptionPane.showInputDialog(rootPane, "Enter value of biometric :",
                 "Value", JOptionPane.QUESTION_MESSAGE);
+        if (val.equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "Please select atleast one type of biometric",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         //<editor-fold defaultstate="collapsed" desc=" Add biometric to database ">
         JSONObject request = new JSONObject(), response;
@@ -478,12 +533,7 @@ public class Homepage extends javax.swing.JFrame {
             JSONObject response = (JSONObject) (new JSONParser()).parse(client.in.readUTF()); // get response
 
             if ((Boolean) response.get("result")) {   // if request was successful
-                Vector<Integer> v = new Vector<>(); // vector to store all accounts
-                JSONArray jsonArray = (JSONArray) response.get("accounts"); // json array we got in response
-                // transfer stuff from json array to vector
-                for (Object i : jsonArray)
-                    v.add(Integer.parseInt(i.toString()));
-                accs.setListData(v);
+                accs.setListData(new Vector((JSONArray) response.get("accounts"))); // show accs in the list
             } else {    // in case of error
                 JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -494,11 +544,12 @@ public class Homepage extends javax.swing.JFrame {
 
     private void selectAccActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            new Account(userid, (int) accs.getSelectedValue()).setVisible(true);   // pass acc no. to next
+            new Account(userid, Integer.parseInt(accs.getSelectedValue().toString())).setVisible(true);   // pass acc no. to next
             isClosedByUser = false;
             this.dispose();
         } catch (NullPointerException e) { // if no account is selected
             JOptionPane.showMessageDialog(rootPane, "Please select an account", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        System.out.println("test");
     }
 }

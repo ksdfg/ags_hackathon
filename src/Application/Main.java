@@ -75,6 +75,11 @@ public class Main {
                                         input.get("type").toString(), input.get("value").toString()));
                                 break;
 
+                            case "get bios":
+                                result.put("bios", app.getBios(input.get("userid").toString()));
+                                result.put("result", true);
+                                break;
+
                             case "rm bio":
                                 result.put("result", app.rmBio(input.get("userid").toString(),
                                         input.get("type").toString()));

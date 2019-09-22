@@ -4,6 +4,7 @@ import ProjectLibs.DatabaseAccess;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class App implements AutoCloseable {
@@ -101,10 +102,26 @@ public class App implements AutoCloseable {
         return true;  // 帰りたい
     }
 
+    public ArrayList getBios(String userid) throws Exception {
+        ArrayList<String> bios = new ArrayList<>(); // to store all the types that have a value
+
+        ResultSet resultSet = da.getData("auth_keys", "type", "user_id = '" + userid + "'");
+
+        if (!resultSet.next())  // if no biometrics are linked
+            throw new Exception("No biometrics linked :(");
+
+        //  add bios to arraylist
+        do {
+            bios.add(resultSet.getString("type") + " recognition");
+        } while (resultSet.next());
+
+        return bios;  // 帰りたい
+    }
+
     public boolean rmBio(String userid, String type) throws SQLException {
         da.deleteRow(
-                "authorizes",
-                "user_id = '" + userid + "' and type = " + type + "'"
+                "auth_keys",
+                "user_id = '" + userid + "' and type = '" + type + "'"
         );
 
         return true;  // 帰りたい
