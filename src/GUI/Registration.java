@@ -148,7 +148,8 @@ public class Registration extends javax.swing.JFrame {
 
         pack();
         setLocationRelativeTo(null);
-    }// </editor-fold>
+    }
+    // </editor-fold>
 
     private void formWindowClosed(WindowEvent evt) {
         (new Login()).setVisible(true);  // go back to login
@@ -180,11 +181,15 @@ public class Registration extends javax.swing.JFrame {
         Homepage homepage = new Homepage(id.getText());
 
         // Add biometric (if necessary)
-        if(JOptionPane.showConfirmDialog(rootPane, "Add biometric to registered user?") == JOptionPane.OK_OPTION)
+        int bio = JOptionPane.showConfirmDialog(rootPane, "Add biometric to registered user?", "Biometric",
+                JOptionPane.YES_NO_OPTION);
+        if(bio == JOptionPane.OK_OPTION)
             homepage.addBioActionPerformed(evt);
 
         // Link account (if necessary)
-        if(JOptionPane.showConfirmDialog(rootPane, "Link a bank account to registered user?") == JOptionPane.OK_OPTION)
+        int acc = JOptionPane.showConfirmDialog(rootPane, "Link a bank account to registered user?",
+                "Bank Account", JOptionPane.YES_NO_OPTION);
+        if(acc == JOptionPane.OK_OPTION)
             homepage.linkAccActionPerformed(evt);
 
         homepage.dispose();

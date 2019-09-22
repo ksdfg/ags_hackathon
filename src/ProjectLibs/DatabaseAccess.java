@@ -79,6 +79,7 @@ public class DatabaseAccess {
 
     // delete a row from a table
     public void deleteRow(String tablename, String conditions) throws SQLException {
+        System.out.println();
         // run delete stmt
         statement.executeUpdate(
                 "delete from " + tablename + " where " + conditions
@@ -89,7 +90,7 @@ public class DatabaseAccess {
     public void update(String tablename, String conditions, String field, String newValue) throws SQLException {
         // run update stmt
         statement.executeUpdate(
-                "update " + tablename + " set " + field + " = " + newValue + "where " + conditions
+                "update " + tablename + " set " + field + " = " + newValue + " where " + conditions
         );
     }
 }

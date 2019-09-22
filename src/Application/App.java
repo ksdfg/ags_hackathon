@@ -82,6 +82,44 @@ public class App implements AutoCloseable {
         return true;  // 帰りたい
     }
 
+    public boolean unlinkAccount(String userid, int acc) throws SQLException {
+        da.deleteRow(
+                "authorizes",
+                "user_id = '" + userid + "' and acc_no = " + acc
+        );
+
+        return true;  // 帰りたい
+    }
+
+    // link bank account to user
+    public boolean addBio(String userid, String type, String val) throws SQLException {
+        da.addRow(
+                "auth_keys",
+                "'" + userid + "', '" + type + "', '" + val + "'"
+        );
+
+        return true;  // 帰りたい
+    }
+
+    public boolean rmBio(String userid, String type) throws SQLException {
+        da.deleteRow(
+                "authorizes",
+                "user_id = '" + userid + "' and type = " + type + "'"
+        );
+
+        return true;  // 帰りたい
+    }
+
+    public boolean chgName(String userid, String name) throws SQLException {
+        da.update("user", "user_id = '" + userid + "'", "name", "'" + name + "'");
+        return true;  // 帰りたい
+    }
+
+    public boolean chgPWD(String userid, String pwd) throws SQLException {
+        da.update("user", "user_id = '" + userid + "'", "password", "'" + pwd + "'");
+        return true;  // 帰りたい
+    }
+
     @Override
     public void close() throws SQLException {
         da.closedb();

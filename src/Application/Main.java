@@ -65,6 +65,31 @@ public class Main {
                                         Integer.parseInt(input.get("acc").toString())));
                                 break;
 
+                            case "unlink acc":
+                                result.put("result", app.unlinkAccount(input.get("userid").toString(),
+                                        Integer.parseInt(input.get("acc").toString())));
+                                break;
+
+                            case "add bio":
+                                result.put("result", app.addBio(input.get("userid").toString(),
+                                        input.get("type").toString(), input.get("value").toString()));
+                                break;
+
+                            case "rm bio":
+                                result.put("result", app.rmBio(input.get("userid").toString(),
+                                        input.get("type").toString()));
+                                break;
+
+                            case "change name":
+                                result.put("result", app.chgName(input.get("userid").toString(),
+                                        input.get("name").toString()));
+                                break;
+
+                            case "change pwd":
+                                result.put("result", app.chgPWD(input.get("userid").toString(),
+                                        input.get("pwd").toString()));
+                                break;
+
                             case "get otp":
 
                             case "get details":      // bank ka kaam

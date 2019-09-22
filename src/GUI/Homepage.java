@@ -27,7 +27,6 @@ public class Homepage extends javax.swing.JFrame {
     private javax.swing.JButton chgPwd;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -266,11 +265,50 @@ public class Homepage extends javax.swing.JFrame {
     }
 
     private void chgPwdActionPerformed(ActionEvent evt) {
+        JPasswordField pwd = new JPasswordField();
+        JOptionPane.showMessageDialog(rootPane, pwd,
+                "Enter new password", JOptionPane.QUESTION_MESSAGE);
+        JSONObject request = new JSONObject(), response;
+        request.put("operation", "change pwd");
+        request.put("userid", userid);
+        request.put("pwd", pwd.getText());
 
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {
+                JOptionPane.showMessageDialog(rootPane, "Password Changed!", "Success", 1);
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void chgNameActionPerformed(ActionEvent evt) {
+        String name = JOptionPane.showInputDialog(rootPane, "Enter new name",
+                "Change Name", JOptionPane.QUESTION_MESSAGE);
+        JSONObject request = new JSONObject(), response;
+        request.put("operation", "change name");
+        request.put("userid", userid);
+        request.put("name", name);
 
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {
+                JOptionPane.showMessageDialog(rootPane, "Name Changed!", "Success", 1);
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void rmBioActionPerformed(ActionEvent evt) {
@@ -278,11 +316,97 @@ public class Homepage extends javax.swing.JFrame {
     }
 
     void addBioActionPerformed(ActionEvent evt) {
+        //<editor-fold defaultstate="collapsed" desc=" Create the stuff to display in dialog ">
+        ButtonGroup bio = new ButtonGroup();
 
+        JRadioButton ecg = new JRadioButton();
+        ecg.setActionCommand("ecg");
+        ecg.setText("ECG Recognition");
+        bio.add(ecg);
+
+        JRadioButton face = new JRadioButton();
+        face.setActionCommand("face");
+        face.setText("Facial Recognition");
+        bio.add(face);
+
+        JRadioButton finger = new JRadioButton();
+        finger.setActionCommand("fingerprint");
+        finger.setText("Fingerprint Recognition");
+        bio.add(finger);
+
+        JPanel disp = new JPanel();
+        disp.setLayout(new BoxLayout(disp, BoxLayout.Y_AXIS));
+        disp.add(ecg);
+        disp.add(face);
+        disp.add(finger);
+        //</editor-fold>
+
+        // get type from user
+        JOptionPane.showMessageDialog(rootPane, disp, "Choose Type of Biometric", JOptionPane.PLAIN_MESSAGE);
+        if (bio.getSelection() == null) {
+            JOptionPane.showMessageDialog(rootPane, "Please select atleast one type of biometric",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        String type = bio.getSelection().getActionCommand();
+
+        //get value of biometric
+        String val = JOptionPane.showInputDialog(rootPane, "Enter value of biometric :",
+                "Value", JOptionPane.QUESTION_MESSAGE);
+
+        //<editor-fold defaultstate="collapsed" desc=" Add biometric to database ">
+        JSONObject request = new JSONObject(), response;
+        request.put("operation", "add bio");
+        request.put("userid", userid);
+        request.put("type", type);
+        request.put("value", val);
+
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {  // if request was successful
+                JOptionPane.showMessageDialog(rootPane, "Biometric added!", "Success",
+                        JOptionPane.PLAIN_MESSAGE);
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //</editor-fold>
     }
 
     private void unlinkAccActionPerformed(ActionEvent evt) {
+        JSONObject request = new JSONObject(), response;
 
+        int acc = Integer.parseInt(
+                JOptionPane.showInputDialog(rootPane, "Enter account number",
+                        "Unlink Account", JOptionPane.QUESTION_MESSAGE)
+        );  // get acc no. to unlink
+
+        //<editor-fold defaultstate="collapsed" desc=" unlink account from user ">
+        request.put("operation", "unlink acc");
+        request.put("userid", userid);
+        request.put("acc", acc);
+
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {   // if request was successful
+                JOptionPane.showMessageDialog(rootPane, "Account removed!", "Success",
+                        JOptionPane.PLAIN_MESSAGE);
+                formWindowOpened();
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //</editor-fold>
     }
 
     void linkAccActionPerformed(ActionEvent evt) {
@@ -290,7 +414,7 @@ public class Homepage extends javax.swing.JFrame {
 
         int acc = Integer.parseInt(
                 JOptionPane.showInputDialog(rootPane, "Enter account number",
-                        "Add Account", JOptionPane.QUESTION_MESSAGE)
+                        "Link Account", JOptionPane.QUESTION_MESSAGE)
         );  // get acc no. to add
 
         //<editor-fold defaultstate="collapsed" desc=" send a 'get otp' request to bank ">
@@ -315,7 +439,7 @@ public class Homepage extends javax.swing.JFrame {
         if (
                 otp == Integer.parseInt(
                         JOptionPane.showInputDialog(rootPane, "Enter otp sent to registered phone number",
-                                "Add Account", JOptionPane.QUESTION_MESSAGE)
+                                "Link Account", JOptionPane.QUESTION_MESSAGE)
                 )  // get otp from user
         ) {
             //<editor-fold defaultstate="collapsed" desc=" link account to user ">
