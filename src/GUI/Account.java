@@ -45,7 +45,6 @@ public class Account extends javax.swing.JFrame {
     }
 
     public Account(String userid, int acc) {
-        System.out.println("test");
         this.userid = userid;
         this.acc = acc;
         initComponents();
