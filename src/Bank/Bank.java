@@ -2,7 +2,6 @@ package Bank;
 
 import ProjectLibs.DatabaseAccess;
 
-import javax.swing.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -166,12 +165,8 @@ public class Bank implements AutoCloseable {
         if (!resultSet.next())
             throw new Exception("No such account");
 
-        JOptionPane.showMessageDialog(null,
-                "OTP " + otp + " sent to phone number " +
-                        resultSet.getLong("phone_no"),
-                "OTP",
-                JOptionPane.INFORMATION_MESSAGE
-                );    // "sending" otp
+        // sending otp
+        System.out.println("OTP " + otp + " sent to phone number " + resultSet.getLong("phone_no"));
 
         return otp; // 帰りたい
     }
