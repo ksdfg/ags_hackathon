@@ -14,7 +14,7 @@ public class Homepage extends javax.swing.JFrame {
 
     // the account in question - the one that logged in
     private String userid;
-    private boolean isClosedByUser = true;
+    boolean isClosedByUser = true;
     //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
     private javax.swing.JList accs;
     private javax.swing.JButton selectAcc;
@@ -318,6 +318,7 @@ public class Homepage extends javax.swing.JFrame {
         request.put("operation", "get bios");
         request.put("userid", userid);
         JList<String> bios = new JList<>();
+        bios.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         try (ClientTools client = new ClientTools("localhost", 8000)) {
             client.out.writeUTF(request.toJSONString());
@@ -362,7 +363,6 @@ public class Homepage extends javax.swing.JFrame {
             e.printStackTrace();
         }
         //</editor-fold>
-
     }
 
     void addBioActionPerformed(ActionEvent evt) {

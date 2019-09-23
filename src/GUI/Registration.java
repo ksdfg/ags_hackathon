@@ -5,7 +5,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.WindowEvent;
 
 public class Registration extends javax.swing.JFrame {
@@ -192,6 +191,7 @@ public class Registration extends javax.swing.JFrame {
         if(acc == JOptionPane.OK_OPTION)
             homepage.linkAccActionPerformed(evt);
 
+        homepage.isClosedByUser = false;
         homepage.dispose();
         this.dispose();
     }
