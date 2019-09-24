@@ -95,7 +95,7 @@ public class Main {
                                         input.get("pwd").toString()));
                                 break;
 
-                            case "get otp":
+                            case "get otp":          // bank ka kaam
 
                             case "get details":      // bank ka kaam
 

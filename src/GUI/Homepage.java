@@ -436,10 +436,35 @@ public class Homepage extends javax.swing.JFrame {
     private void unlinkAccActionPerformed(ActionEvent evt) {
         JSONObject request = new JSONObject(), response;
 
-        int acc = Integer.parseInt(
-                JOptionPane.showInputDialog(rootPane, "Enter account number",
-                        "Unlink Account", JOptionPane.QUESTION_MESSAGE)
-        );  // get acc no. to unlink
+
+        //<editor-fold defaultstate="collapsed" desc=" display all linked accounts ">
+        request.put("operation", "get accounts");
+        request.put("userid", userid);
+        JList accs = new JList();
+        accs.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        try (ClientTools client = new ClientTools("localhost", 8000)) {
+            client.out.writeUTF(request.toJSONString());
+            response = (JSONObject) (new JSONParser()).parse(client.in.readUTF());
+
+            if ((boolean) response.get("result")) {
+                accs.setListData(new Vector((JSONArray) response.get("accounts")));
+            } else {  // in case of error
+                JOptionPane.showMessageDialog(rootPane, response.get("msg"), "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //</editor-fold>
+        JOptionPane.showMessageDialog(rootPane, accs, "Select account to unlink", JOptionPane.QUESTION_MESSAGE);
+        int acc = -1;
+        try {
+            acc = Integer.parseInt(accs.getSelectedValue().toString());  // get acc no. to unlink
+        } catch (NullPointerException e){
+            JOptionPane.showMessageDialog(rootPane, "Select an account", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
 
         //<editor-fold defaultstate="collapsed" desc=" unlink account from user ">
         request.put("operation", "unlink acc");
