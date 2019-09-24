@@ -12,9 +12,9 @@ import java.util.Vector;
 
 public class Homepage extends javax.swing.JFrame {
 
+    boolean isClosedByUser = true;
     // the account in question - the one that logged in
     private String userid;
-    boolean isClosedByUser = true;
     //<editor-fold defaultstate="collapsed" desc=" All the frame components ">
     private javax.swing.JList accs;
     private javax.swing.JButton selectAcc;
@@ -436,7 +436,6 @@ public class Homepage extends javax.swing.JFrame {
     private void unlinkAccActionPerformed(ActionEvent evt) {
         JSONObject request = new JSONObject(), response;
 
-
         //<editor-fold defaultstate="collapsed" desc=" display all linked accounts ">
         request.put("operation", "get accounts");
         request.put("userid", userid);
@@ -458,10 +457,10 @@ public class Homepage extends javax.swing.JFrame {
         }
         //</editor-fold>
         JOptionPane.showMessageDialog(rootPane, accs, "Select account to unlink", JOptionPane.QUESTION_MESSAGE);
-        int acc = -1;
+        int acc;
         try {
             acc = Integer.parseInt(accs.getSelectedValue().toString());  // get acc no. to unlink
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             JOptionPane.showMessageDialog(rootPane, "Select an account", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
